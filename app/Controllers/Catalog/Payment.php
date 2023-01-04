@@ -261,11 +261,6 @@ class Payment extends BaseController
         $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
-        // $this->PmCallback->save([
-        //     'payload' => $status,
-        //     'received_date' => $ts
-        // ]);
-
         if ($data->is_closed_payment === 1) {
             $invoice = $this->PuPayment->where(
                 [
@@ -279,6 +274,10 @@ class Payment extends BaseController
             if (!$invoice) {
                 $this->PmCallback->save([
                     'payload' => 'INVOICE TIDAK DITEMUKAN',
+                    'received_date' => $ts
+                ]);
+                $this->PmCallback->save([
+                    'payload' => 'payment_ref_merchant: ' . $uniqueRef . '-' . 'payment_ref_id:' . $paymentRef,
                     'received_date' => $ts
                 ]);
                 return json_encode([
