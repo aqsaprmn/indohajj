@@ -268,11 +268,14 @@ class Payment extends BaseController
 
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
-                [
-                    'payment_ref_merchant' => (string) $uniqueRef,
-                    'payment_ref_id' => (string) $paymentRef,
-                    'status' => 'UNPAID'
-                ]
+                'payment_ref_merchant',
+                (string) $uniqueRef
+            )->where(
+                'payment_ref_id',
+                (string) $paymentRef
+            )->where(
+                'status',
+                'UNPAID'
             )->first();
 
             $this->PmCallback->save([
@@ -283,10 +286,6 @@ class Payment extends BaseController
             if (!$invoice) {
                 $this->PmCallback->save([
                     'payload' => 'INVOICE TIDAK DITEMUKAN',
-                    'received_date' => $ts
-                ]);
-                $this->PmCallback->save([
-                    'payload' => 'payment_ref_merchant: ' . $uniqueRef . '-' . 'payment_ref_id:' . $paymentRef,
                     'received_date' => $ts
                 ]);
                 return json_encode([
@@ -303,11 +302,14 @@ class Payment extends BaseController
             ];
 
             $updPay = $this->PuPayment->where(
-                [
-                    'payment_ref_merchant' => (string) $uniqueRef,
-                    'payment_ref_id' => (string) $paymentRef,
-                    'status' => 'UNPAID'
-                ]
+                'payment_ref_merchant',
+                (string) $uniqueRef
+            )->where(
+                'payment_ref_id',
+                (string) $paymentRef
+            )->where(
+                'status',
+                'UNPAID'
             )->set($dataPayment)->update();
 
             if (!$updPay) {
@@ -325,10 +327,13 @@ class Payment extends BaseController
             switch ($status) {
                 case 'PAID':
 
-                    $updBook = $this->PuBooking->where('kd_booking', $invoice['kd_booking'])->set('status', 'Y')->update();
+                    $updBook = $this->PuBooking->where(
+                        'kd_booking',
+                        $invoice['kd_booking']
+                    )->set('status', 'Y')->update();
 
                     if (!$updBook) {
-                        $this->PuBooking->save([
+                        $this->PmCallback->save([
                             'payload' => 'update booking gaberes',
                             'received_date' => $ts
                         ]);
