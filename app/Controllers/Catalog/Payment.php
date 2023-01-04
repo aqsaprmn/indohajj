@@ -208,7 +208,7 @@ class Payment extends BaseController
 
         $data = json_decode($json);
 
-        $insConfirm = $this->PmConfirm->save([
+        $this->PmConfirm->save([
             'payment_ref_id' => (string)$data->reference,
             'payment_ref_merchant' => (string)$data->merchant_ref,
             'payment_method' => (string)$data->payment_method,
@@ -269,8 +269,8 @@ class Payment extends BaseController
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    'payment_ref_merchant' => (string) $uniqueRef,
-                    'payment_ref_id' => (string) $paymentRef,
+                    'payment_ref_merchant' => "'" . $uniqueRef . "'",
+                    'payment_ref_id' => "'" . $paymentRef . "'",
                     'status' => 'UNPAID'
                 ]
             )->first();
@@ -291,34 +291,34 @@ class Payment extends BaseController
                 ]);
             }
 
-            $dataPayment  = [
-                'status' => $status,
-                'updated_time_callback' => $ts,
-                'updated_status_callback' => 'SUKSES',
-                'updated_payload_callback' => $data
-            ];
-
-            $updPay = $this->PuPayment->where(
-                [
-                    'payment_ref_merchant' => (string) $uniqueRef,
-                    'payment_ref_id' => (string) $paymentRef,
-                    'status' => 'UNPAID'
-                ]
-            )->set($dataPayment)->update();
-
-            if (!$updPay) {
-                $this->PmCallback->save([
-                    'payload' => 'update payment gaberes',
-                    'received_date' => $ts
-                ]);
-
-                return json_encode([
-                    'success' => false,
-                    'message' => 'Unrecognized payment status',
-                ]);
-            }
-
             if ($status == "PAID") {
+                $dataPayment  = [
+                    'status' => $status,
+                    'updated_time_callback' => $ts,
+                    'updated_status_callback' => 'SUKSES',
+                    'updated_payload_callback' => $data
+                ];
+
+                $updPay = $this->PuPayment->where(
+                    [
+                        'payment_ref_merchant' => "'" . $uniqueRef . "'",
+                        'payment_ref_id' => "'" . $paymentRef . "'",
+                        'status' => 'UNPAID'
+                    ]
+                )->set($dataPayment)->update();
+
+                if (!$updPay) {
+                    $this->PmCallback->save([
+                        'payload' => 'update payment gaberes',
+                        'received_date' => $ts
+                    ]);
+
+                    return json_encode([
+                        'success' => false,
+                        'message' => 'Unrecognized payment status',
+                    ]);
+                }
+
                 $updBook = $this->PuBooking->where('kd_booking', $invoice['kd_booking'])->set('status', 'Y')->update();
 
                 if (!$updBook) {
