@@ -266,7 +266,7 @@ class Payment extends BaseController
         //     'received_date' => $ts
         // ]);
 
-        if ($data->is_closed_payment === 1) {
+        if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
                     'payment_ref_merchant' => (string) $uniqueRef,
@@ -274,6 +274,11 @@ class Payment extends BaseController
                     'status' => 'UNPAID'
                 ]
             )->first();
+
+            $this->PmCallback->save([
+                'payload' => $invoice['kd_booking'] . '-' . $invoice['payment_ref_id'] . '-' . $invoice['status'] . '-' . $invoice['payment_ref_merchant'],
+                'received_date' => $ts
+            ]);
 
             if (!$invoice) {
                 $this->PmCallback->save([
