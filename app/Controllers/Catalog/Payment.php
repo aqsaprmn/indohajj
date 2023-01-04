@@ -275,7 +275,6 @@ class Payment extends BaseController
                 ]
             )->first();
 
-
             if (!$invoice) {
                 $this->PmCallback->save([
                     'payload' => 'INVOICE TIDAK DITEMUKAN',
@@ -298,13 +297,13 @@ class Payment extends BaseController
                 'updated_payload_callback' => $data
             ];
 
-            $updPay = $this->PuPayment->set($dataPayment)->where(
+            $updPay = $this->PuPayment->where(
                 [
                     'payment_ref_merchant' => (string) $uniqueRef,
                     'payment_ref_id' => (string) $paymentRef,
                     'status' => 'UNPAID'
                 ]
-            )->update();
+            )->set($dataPayment)->update();
 
             if (!$updPay) {
                 $this->PmCallback->save([
@@ -321,7 +320,7 @@ class Payment extends BaseController
             switch ($status) {
                 case 'PAID':
 
-                    $updBook = $this->PuBooking->set('status', 'Y')->where('kd_booking', $invoice['kd_booking'])->update();
+                    $updBook = $this->PuBooking->where('kd_booking', $invoice['kd_booking'])->set('status', 'Y')->update();
 
                     if (!$updBook) {
                         $this->PuBooking->save([
