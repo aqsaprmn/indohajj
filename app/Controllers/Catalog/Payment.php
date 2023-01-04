@@ -299,7 +299,8 @@ class Payment extends BaseController
 
                     $this->PuPayment->set($dataPayment)->where(
                         [
-                            'payment_ref_merchant' => $uniqueRef,
+                            'payment_ref_merchant' => (string) $uniqueRef,
+                            'payment_ref_id' => (string) $paymentRef,
                             'status' => 'UNPAID'
                         ]
                     )->update();
@@ -314,7 +315,8 @@ class Payment extends BaseController
 
                     $this->PuPayment->set($dataPayment)->where(
                         [
-                            'payment_ref_merchant' => $uniqueRef,
+                            'payment_ref_merchant' => (string) $uniqueRef,
+                            'payment_ref_id' => (string) $paymentRef,
                             'status' => 'UNPAID'
                         ]
                     )->update();
@@ -327,7 +329,8 @@ class Payment extends BaseController
 
                     $this->PuPayment->set($dataPayment)->where(
                         [
-                            'payment_ref_merchant' => $uniqueRef,
+                            'payment_ref_merchant' => (string) $uniqueRef,
+                            'payment_ref_id' => (string) $paymentRef,
                             'status' => 'UNPAID'
                         ]
                     )->update();
