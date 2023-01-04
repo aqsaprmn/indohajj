@@ -275,10 +275,10 @@ class Payment extends BaseController
                 ]
             )->first();
 
-            // $this->PmCallback->save([
-            //     'payload' => $invoice['kd_booking'] . '-' . $invoice['payment_ref_id'] . '-' . $invoice['status'] . '-' . $invoice['payment_ref_merchant'],
-            //     'received_date' => $ts
-            // ]);
+            $this->PmCallback->save([
+                'payload' => $uniqueRef . '-' . $paymentRef,
+                'received_date' => $ts
+            ]);
 
             if (!$invoice) {
                 $this->PmCallback->save([
