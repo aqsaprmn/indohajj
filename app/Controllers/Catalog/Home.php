@@ -43,7 +43,6 @@ class Home extends BaseController
         // ]);
 
 
-        return view('Catalog/home', $data);
     }
 
     public function myProfile()
