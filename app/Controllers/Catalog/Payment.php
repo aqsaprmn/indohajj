@@ -298,24 +298,28 @@ class Payment extends BaseController
                 'updated_payload_callback' => $data
             ];
 
+            $updPay = $this->PuPayment->set($dataPayment)->where(
+                [
+                    'payment_ref_merchant' => (string) $uniqueRef,
+                    'payment_ref_id' => (string) $paymentRef,
+                    'status' => 'UNPAID'
+                ]
+            )->update();
+
+            if (!$updPay) {
+                $this->PmCallback->save([
+                    'payload' => 'update payment gaberes',
+                    'received_date' => $ts
+                ]);
+
+                return json_encode([
+                    'success' => false,
+                    'message' => 'Unrecognized payment status',
+                ]);
+            }
+
             switch ($status) {
                 case 'PAID':
-
-                    $updPay = $this->PuPayment->set($dataPayment)->where(
-                        [
-                            'payment_ref_merchant' => (string) $uniqueRef,
-                            'payment_ref_id' => (string) $paymentRef,
-                            'status' => 'UNPAID'
-                        ]
-                    )->update();
-
-
-                    if (!$updPay) {
-                        $this->PmCallback->save([
-                            'payload' => 'update payment gaberes',
-                            'received_date' => $ts
-                        ]);
-                    }
 
                     $updBook = $this->PuBooking->set('status', 'Y')->where('kd_booking', $invoice['kd_booking'])->update();
 
@@ -325,30 +329,6 @@ class Payment extends BaseController
                             'received_date' => $ts
                         ]);
                     }
-
-                    break;
-
-                case 'EXPIRED':
-
-                    $this->PuPayment->set($dataPayment)->where(
-                        [
-                            'payment_ref_merchant' => (string) $uniqueRef,
-                            'payment_ref_id' => (string) $paymentRef,
-                            'status' => 'UNPAID'
-                        ]
-                    )->update();
-
-                    break;
-
-                case 'FAILED':
-
-                    $this->PuPayment->set($dataPayment)->where(
-                        [
-                            'payment_ref_merchant' => (string) $uniqueRef,
-                            'payment_ref_id' => (string) $paymentRef,
-                            'status' => 'UNPAID'
-                        ]
-                    )->update();
 
                     break;
 
