@@ -1,0 +1,534 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+  box-sizing: border-box;
+}
+
+.nav-logo {
+  width: 120px;
+  height: 50px;
+  /* margin: auto; */
+}
+
+.rounded-bottom-right {
+  /* width: 14%; */
+  border-bottom-right-radius: 5rem;
+}
+
+.carousel {
+  height: 90vh;
+  /* margin-top: 88px; */
+  filter: brightness(60%);
+}
+
+/* .mt-88 {
+  margin-top: 88px;
+} */
+
+.caro-img {
+  height: 100%;
+}
+
+.caro-img img {
+  height: 100%;
+}
+
+.caro-img img {
+  filter: brightness(70%);
+}
+
+.navbar {
+  z-index: 10;
+  /* margin-top: -88px; */
+  height: 80px;
+}
+
+.pt-80 {
+  padding-top: 80px;
+}
+
+.transition-3 {
+  transition: 0.3s;
+}
+
+.bg-transparent-2{
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+}
+
+.bg-dongker-2 {
+  background: rgba(1,0,40);
+}
+
+.card-img-top {
+  height: 300px;
+}
+
+.card {
+  transition: 0.5s;
+  /* border: 1px solid black; */
+}
+
+.card:hover {
+  box-shadow: 5px 10px 16px #888888;
+}
+
+.icon-ma {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+}
+
+.fasilitas {
+  height: 70px;
+  overflow-y: auto;
+}
+
+.bg-grey {
+  background: rgb(230, 230, 230);
+}
+
+.layanan-icon {
+  font-size: 5rem;
+  margin-bottom: 24px;
+}
+
+.text-b-brown {
+  color: #b9933a;
+}
+
+.bg-b-brown {
+  background: #b9933a;
+}
+
+.btn-brown {
+  background: #b9933a;
+  transition: 0.5s;
+}
+
+.btn-brown:hover {
+  background: #a58336;
+}
+
+.bg-b-brown {
+  background: #b9933a;
+}
+
+.text-b-blue {
+  color: #5cc9e2;
+}
+
+.bg-b-blue {
+  background: #5cc9e2;
+}
+
+.btn-blue {
+  background: #5cc9e2;
+  border: solid 1px #5cc9e2;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  transition: 0.5s;
+}
+
+.btn-blue:hover {
+  background: #4eadc3;
+}
+
+.lh-0 {
+  line-height: 0;
+}
+
+.maskapai {
+  width: 100px;
+}
+
+.active-nav {
+  background: #3b8393;
+}
+
+.log-admin {
+  background: /* top, transparent black, faked with gradient */ linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),
+    /* bottom, image */ url("../img/bgmekah.jpg");
+}
+
+/* Loader */
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(rgba(255, 0, 0, 0), rgba(0, 0, 0, 0.2),rgba(255, 0, 0, 0));
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  animation: loader 2s infinite ease;
+}
+
+.loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-inner {
+  0% {
+    height: 0%;
+  }
+  25% {
+    height: 0%;
+  }
+  50% {
+    height: 100%;
+  }
+  75% {
+    height: 100%;
+  }
+  100% {
+    height: 0%;
+  }
+}
+
+.password {
+  /* border: 1px solid black; */
+}
+
+.see {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px 12px 6px 12px;
+  color: black;
+  transition: 0.5s;
+  /* border: 1px solid black; */
+}
+
+.see:hover {
+  cursor: pointer;
+  color: #3e3e3e;
+}
+
+.login-backdrop {
+  background: linear-gradient(
+    rgba(0,0,0,0.6), rgba(0,0,0,0.5)
+  ), url(../../../public/asset/img/mekkahbackdrop.jpeg);
+  background-size: cover;
+  /* border-end-end-radius: 20px;
+  border-top-right-radius: 20px; */
+}
+
+.regist-backdrop {
+  background: linear-gradient(
+    rgba(0,0,0,0.6), rgba(0,0,0,0.5)
+  ), url(../../../public/asset/img/zayedmosque.jpeg);
+  background-size: cover;  
+}
+
+.hover-lg {
+  transition: 0.5s;
+}
+
+.hover-lg:hover {
+  margin: 0 -20px 0 -20px;
+}
+
+.arrow-left {
+  transition: 0.5s;
+}
+
+.back:hover .arrow-left{
+  margin-right: 10px;
+}
+
+.text-login-hover {
+  color: #FF9451;
+  transition: 1s;
+}
+
+.text-login-hover:hover {
+ color: #dc7c41;
+} 
+
+div.btn-group:hover {
+  cursor: pointer;
+}
+
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.btn-active-non-outline:focus {
+  border: none;
+  outline: none;
+}
+/* 
+.custom-input-file::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input::before {
+  content: 'Select some files';
+  display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+} */
+
+.profil-img {
+  width: 160px;
+  /* border: 1px solid black; */
+  border-radius: 100%;
+  
+}
+
+/* Tooltip container */
+.tooltip-copy {
+  position: relative;
+  display: inline-block;
+  /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltiptext-copy {
+  visibility: hidden;
+  width: 80px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  font-size: 0.7rem;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -40px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltiptext-copy::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+/* .btn-copy:hover .tooltiptext-copy {
+  visibility: visible;
+  opacity: 1;
+}  */
+
+/* .btn-copy:hover .tooltiptext-copy {
+  visibility: visible;
+  opacity: 1;
+} */
+
+/* Next Bootstrap */
+
+.fs-7 {
+  font-size: 0.9rem !important;
+}
+
+.text-bg-dongker {
+  color: #fff !important;
+  background-color: #2b5998 !important;
+}
+
+.text-dongker {
+  --bs-text-opacity: 1;
+  color: #2b5998 !important;
+}
+
+.text-bg-sea {
+  color: #fff !important;
+  background-color: #62B4CC !important;
+}
+
+.text-sea {
+  --bs-text-opacity: 1;
+  color: #62B4CC !important;
+}
+
+.text-bg-orange {
+  color: #fff !important;
+  background-color: #FF9451 !important;
+}
+
+.text-orange {
+  --bs-text-opacity: 1;
+  color: #FF9451 !important;
+}
+
+.bg-orange {
+  --bs-bg-opacity: 1;
+  background-color: #FF9451 !important;
+}
+
+.bg-dongker {
+  --bs-bg-opacity: 1;
+  background-color: #2b5998 !important;
+}
+
+.bg-blue-dark {
+  --bs-bg-opacity: 1;
+  background-color: #000028 !important;
+}
+
+.bg-sea {
+  --bs-bg-opacity: 1;
+  background-color: #62B4CC !important;
+}
+
+.bg-grad-ocean {
+  --bs-bg-opacity: 1; 
+  background: linear-gradient(to right, rgb(224, 255, 249),rgb(121, 237, 255), rgb(206, 237, 255));
+}
+
+.bg-grad-waves {
+  --bs-bg-opacity: 1; 
+  background: linear-gradient(to right, rgb(208, 255, 253), rgb(156, 217, 255));
+}
+
+.aksen {
+  top: 700px;
+  left: -140px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+.z-index-100 {
+  z-index: 100;
+}
+
+.sosmed {
+  /* border: 1px solid white; */
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 1.8rem;
+
+
+}
+
+.sosmed .sosmed-list {
+  list-style: none;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  position: relative;
+  margin: 10px;
+}
+
+.sosmed .sosmed-list a {
+  /* border: 1px solid white; */
+  /* background-color: white; */
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+.sos-hover:hover {
+  filter: brightness(90%);
+}
+
+.vertical-middle {
+  vertical-align: middle;
+}
+
+.aksen-umrah {
+  top: -300px;
+  transform: rotate(-20deg);
+}
+
+.banner-umrah {
+  background: linear-gradient(rgba(1,0,40), rgba(1,0,40, 0.8)), url(../../../public/asset/img/masjid\ nabawi.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* #userlogin {
+  min-width: 300px;
+}
+
+@media only screen and (max-width: 1043px) {
+  #userlogin {
+    min-width: 160px;
+  }
+} */
