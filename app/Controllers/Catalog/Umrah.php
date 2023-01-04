@@ -81,9 +81,6 @@ class Umrah extends BaseController
 
         // dd($invoice);
 
-
-        return view('Catalog/home', $data);
-
         return view('Catalog/Umrah/umrah', $data);
     }
 
