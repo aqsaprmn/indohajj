@@ -261,27 +261,24 @@ class Payment extends BaseController
         $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
-        $this->PmCallback->save([
-            'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
-            'received_date' => $ts
-        ]);
+        // $this->PmCallback->save([
+        //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
+        //     'received_date' => $ts
+        // ]);
 
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
-                'payment_ref_merchant',
-                (string) $uniqueRef
-            )->where(
-                'payment_ref_id',
-                (string) $paymentRef
-            )->where(
-                'status',
-                'UNPAID'
+                [
+                    'payment_ref_merchant' => (string) $uniqueRef,
+                    'payment_ref_id' => (string) $paymentRef,
+                    'status' => 'UNPAID'
+                ]
             )->first();
 
-            $this->PmCallback->save([
-                'payload' => $invoice['kd_booking'] . '-' . $invoice['payment_ref_id'] . '-' . $invoice['status'] . '-' . $invoice['payment_ref_merchant'],
-                'received_date' => $ts
-            ]);
+            // $this->PmCallback->save([
+            //     'payload' => $invoice['kd_booking'] . '-' . $invoice['payment_ref_id'] . '-' . $invoice['status'] . '-' . $invoice['payment_ref_merchant'],
+            //     'received_date' => $ts
+            // ]);
 
             if (!$invoice) {
                 $this->PmCallback->save([
@@ -302,14 +299,11 @@ class Payment extends BaseController
             ];
 
             $updPay = $this->PuPayment->where(
-                'payment_ref_merchant',
-                (string) $uniqueRef
-            )->where(
-                'payment_ref_id',
-                (string) $paymentRef
-            )->where(
-                'status',
-                'UNPAID'
+                [
+                    'payment_ref_merchant' => (string) $uniqueRef,
+                    'payment_ref_id' => (string) $paymentRef,
+                    'status' => 'UNPAID'
+                ]
             )->set($dataPayment)->update();
 
             if (!$updPay) {
@@ -324,33 +318,26 @@ class Payment extends BaseController
                 ]);
             }
 
-            switch ($status) {
-                case 'PAID':
+            if ($status == "PAID") {
+                $updBook = $this->PuBooking->where('kd_booking', $invoice['kd_booking'])->set('status', 'Y')->update();
 
-                    $updBook = $this->PuBooking->where(
-                        'kd_booking',
-                        $invoice['kd_booking']
-                    )->set('status', 'Y')->update();
-
-                    if (!$updBook) {
-                        $this->PmCallback->save([
-                            'payload' => 'update booking gaberes',
-                            'received_date' => $ts
-                        ]);
-                    }
-
-                    break;
-
-                default:
+                if (!$updBook) {
                     $this->PmCallback->save([
-                        'payload' => 'payment gaberes',
+                        'payload' => 'update booking gaberes',
                         'received_date' => $ts
                     ]);
+                }
+            } elseif ($status == "EXPIRED" || $status == "FAILED") {
+            } else {
+                $this->PmCallback->save([
+                    'payload' => 'payment gaberes',
+                    'received_date' => $ts
+                ]);
 
-                    return json_encode([
-                        'success' => false,
-                        'message' => 'Unrecognized payment status',
-                    ]);
+                return json_encode([
+                    'success' => false,
+                    'message' => 'Unrecognized payment status',
+                ]);
             }
 
             return json_encode(['success' => true]);
