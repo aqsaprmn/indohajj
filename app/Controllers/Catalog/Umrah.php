@@ -95,9 +95,18 @@ class Umrah extends BaseController
             ]
         )->first();
 
+        $invoice2 = $this->PuPayment->where(
+            [
+                'payment_ref_id' => "tes",
+                'payment_ref_merchant' => "R20230104180543aqsaprmn",
+                'status' => 'UNPAID'
+            ]
+        )->first();
+
 
         if ($invoice) {
-            dd($invoice);
+            d($invoice);
+            dd($invoice2);
         } else {
             dd('gagal');
         }

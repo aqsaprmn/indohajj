@@ -257,8 +257,8 @@ class Payment extends BaseController
             ]);
         }
 
-        $uniqueRef = $data->merchant_ref;
-        $paymentRef = $data->reference;
+        $uniqueRef = (string) $data->merchant_ref;
+        $paymentRef = (string) $data->reference;
         $status = strtoupper((string) $data->status);
 
         // $this->PmCallback->save([
@@ -280,16 +280,16 @@ class Payment extends BaseController
                 'received_date' => $ts
             ]);
 
-            if (!$invoice) {
-                $this->PmCallback->save([
-                    'payload' => 'INVOICE TIDAK DITEMUKAN',
-                    'received_date' => $ts
-                ]);
-                return json_encode([
-                    'success' => false,
-                    'message' => 'No invoice found or already paid: ' . $uniqueRef,
-                ]);
-            }
+            // if ($invoice) {
+            //     $this->PmCallback->save([
+            //         'payload' => 'INVOICE TIDAK DITEMUKAN',
+            //         'received_date' => $ts
+            //     ]);
+            //     return json_encode([
+            //         'success' => false,
+            //         'message' => 'No invoice found or already paid: ' . $uniqueRef,
+            //     ]);
+            // }
 
             if ($status == "PAID") {
                 $dataPayment  = [
@@ -301,8 +301,8 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_merchant' => "'" . $uniqueRef . "'",
-                        'payment_ref_id' => "'" . $paymentRef . "'",
+                        'payment_ref_merchant' => $uniqueRef,
+                        'payment_ref_id' => $paymentRef,
                         'status' => 'UNPAID'
                     ]
                 )->set($dataPayment)->update();
@@ -341,8 +341,8 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_merchant' => "'" . $uniqueRef . "'",
-                        'payment_ref_id' => "'" . $paymentRef . "'",
+                        'payment_ref_merchant' => $uniqueRef,
+                        'payment_ref_id' => $paymentRef,
                         'status' => 'UNPAID'
                     ]
                 )->set($dataPayment)->update();
