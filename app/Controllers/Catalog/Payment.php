@@ -280,7 +280,7 @@ class Payment extends BaseController
                 'received_date' => $ts
             ]);
 
-            if ($invoice) {
+            if (!$invoice) {
                 $this->PmCallback->save([
                     'payload' => 'INVOICE TIDAK DITEMUKAN',
                     'received_date' => $ts
