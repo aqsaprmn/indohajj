@@ -258,6 +258,7 @@ class Payment extends BaseController
         }
 
         $uniqueRef = $data->merchant_ref;
+        $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
         // $this->PmCallback->save([
@@ -268,11 +269,11 @@ class Payment extends BaseController
         if ($data->is_closed_payment === 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    'payment_ref_merchant' => $uniqueRef,
+                    'payment_ref_merchant' => (string) $uniqueRef,
+                    'payment_ref_id' => (string) $paymentRef,
                     'status' => 'UNPAID'
                 ]
-            )
-                ->first();
+            )->first();
 
 
             if (!$invoice) {
