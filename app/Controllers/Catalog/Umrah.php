@@ -104,7 +104,7 @@ class Umrah extends BaseController
         )->first();
 
 
-        if ($invoice) {
+        if (!$invoice) {
             d($invoice);
             dd($invoice2);
         } else {
