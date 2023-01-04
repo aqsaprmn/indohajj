@@ -104,11 +104,11 @@ class Umrah extends BaseController
         )->first();
 
 
-        if (!$invoice) {
-            d($invoice);
+        if (!$invoice2) {
+            d('gagal');
             dd($invoice2);
         } else {
-            dd('gagal');
+            dd('sukses');
         }
 
         return view('Catalog/Umrah/umrah', $data);
