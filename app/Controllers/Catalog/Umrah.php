@@ -80,26 +80,26 @@ class Umrah extends BaseController
         // )->first();
 
         // dd($invoice);
-        $dataPayment  = [
-            'status' => 'PAID',
-            'updated_time_callback' => date('Y-m-d H:i:s'),
-            'updated_status_callback' => 'SUKSES',
-            'updated_payload_callback' => 'test'
-        ];
+        // $dataPayment  = [
+        //     'status' => 'PAID',
+        //     'updated_time_callback' => date('Y-m-d H:i:s'),
+        //     'updated_status_callback' => 'SUKSES',
+        //     'updated_payload_callback' => 'test'
+        // ];
 
-        $upd = $this->PuPayment->where(
-            [
-                'payment_ref_merchant' => 'R20230104170007aqsaprmn',
-                'payment_ref_id' => 'T178366005798GZSIW',
-                'status' => 'UNPAID'
-            ]
-        )->set($dataPayment)->update();
+        // $upd = $this->PuPayment->where(
+        //     [
+        //         'payment_ref_merchant' => 'R20230104170007aqsaprmn',
+        //         'payment_ref_id' => 'T178366005798GZSIW',
+        //         'status' => 'UNPAID'
+        //     ]
+        // )->set($dataPayment)->update();
 
-        if ($upd) {
-            dd('sukses');
-        } else {
-            dd('gagal');
-        }
+        // if ($upd) {
+        //     dd('sukses');
+        // } else {
+        //     dd('gagal');
+        // }
 
         return view('Catalog/Umrah/umrah', $data);
     }
