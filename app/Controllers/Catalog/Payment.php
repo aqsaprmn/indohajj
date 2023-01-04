@@ -280,16 +280,16 @@ class Payment extends BaseController
                 'received_date' => $ts
             ]);
 
-            // if ($invoice) {
-            //     $this->PmCallback->save([
-            //         'payload' => 'INVOICE TIDAK DITEMUKAN',
-            //         'received_date' => $ts
-            //     ]);
-            //     return json_encode([
-            //         'success' => false,
-            //         'message' => 'No invoice found or already paid: ' . $uniqueRef,
-            //     ]);
-            // }
+            if ($invoice) {
+                $this->PmCallback->save([
+                    'payload' => 'INVOICE TIDAK DITEMUKAN',
+                    'received_date' => $ts
+                ]);
+                return json_encode([
+                    'success' => false,
+                    'message' => 'No invoice found or already paid: ' . $uniqueRef,
+                ]);
+            }
 
             if ($status == "PAID") {
                 $dataPayment  = [
