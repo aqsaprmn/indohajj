@@ -269,8 +269,8 @@ class Payment extends BaseController
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    'payment_ref_merchant' => "'" . $uniqueRef . "'",
-                    'payment_ref_id' => "'" . $paymentRef . "'",
+                    'payment_ref_id' => $paymentRef,
+                    'payment_ref_merchant' => $uniqueRef,
                     'status' => 'UNPAID'
                 ]
             )->first();

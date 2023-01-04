@@ -87,19 +87,20 @@ class Umrah extends BaseController
         //     'updated_payload_callback' => 'test'
         // ];
 
-        // $upd = $this->PuPayment->where(
-        //     [
-        //         'payment_ref_merchant' => 'R20230104170007aqsaprmn',
-        //         'payment_ref_id' => 'T178366005798GZSIW',
-        //         'status' => 'UNPAID'
-        //     ]
-        // )->set($dataPayment)->update();
+        $invoice = $this->PuPayment->where(
+            [
+                'payment_ref_id' => "T1783660073309O7MT",
+                'payment_ref_merchant' => "R20230104180543aqsaprmn",
+                'status' => 'UNPAID'
+            ]
+        )->first();
 
-        // if ($upd) {
-        //     dd('sukses');
-        // } else {
-        //     dd('gagal');
-        // }
+
+        if ($invoice) {
+            dd($invoice);
+        } else {
+            dd('gagal');
+        }
 
         return view('Catalog/Umrah/umrah', $data);
     }
