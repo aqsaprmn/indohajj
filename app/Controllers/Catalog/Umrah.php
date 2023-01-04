@@ -72,14 +72,14 @@ class Umrah extends BaseController
             $data['datapaketumrah'] = null;
         }
 
-        $invoice = $this->PuPayment->where(
-            [
-                'payment_ref_merchant' => "R20230104151323aqsaprmn",
-                'status' => 'UNPAID'
-            ]
-        )->first();
+        // $invoice = $this->PuPayment->where(
+        //     [
+        //         'payment_ref_merchant' => "R20230104151323aqsaprmn",
+        //         'status' => 'UNPAID'
+        //     ]
+        // )->first();
 
-        dd($invoice);
+        // dd($invoice);
 
 
         return view('Catalog/home', $data);
