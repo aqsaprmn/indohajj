@@ -326,8 +326,38 @@ class Payment extends BaseController
                         'payload' => 'update booking gaberes',
                         'received_date' => $ts
                     ]);
+                    return json_encode([
+                        'success' => false,
+                        'message' => 'Unrecognized payment status',
+                    ]);
                 }
             } elseif ($status == "EXPIRED" || $status == "FAILED") {
+                $dataPayment  = [
+                    'status' => $status,
+                    'updated_time_callback' => $ts,
+                    'updated_status_callback' => 'SUKSES',
+                    'updated_payload_callback' => $data
+                ];
+
+                $updPay = $this->PuPayment->where(
+                    [
+                        'payment_ref_merchant' => "'" . $uniqueRef . "'",
+                        'payment_ref_id' => "'" . $paymentRef . "'",
+                        'status' => 'UNPAID'
+                    ]
+                )->set($dataPayment)->update();
+
+                if (!$updPay) {
+                    $this->PmCallback->save([
+                        'payload' => 'update payment gaberes',
+                        'received_date' => $ts
+                    ]);
+
+                    return json_encode([
+                        'success' => false,
+                        'message' => 'Unrecognized payment status',
+                    ]);
+                }
             } else {
                 $this->PmCallback->save([
                     'payload' => 'payment gaberes',
