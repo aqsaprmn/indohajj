@@ -261,10 +261,10 @@ class Payment extends BaseController
         $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
-        $this->PmCallback->save([
-            'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
-            'received_date' => $ts
-        ]);
+        // $this->PmCallback->save([
+        //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
+        //     'received_date' => $ts
+        // ]);
 
         if ($data->is_closed_payment === 1) {
             $invoice = $this->PuPayment->where(
@@ -301,7 +301,7 @@ class Payment extends BaseController
             switch ($status) {
                 case 'PAID':
 
-                    $this->PuPayment->set($dataPayment)->where(
+                    $updPay = $this->PuPayment->set($dataPayment)->where(
                         [
                             'payment_ref_merchant' => (string) $uniqueRef,
                             'payment_ref_id' => (string) $paymentRef,
@@ -309,7 +309,22 @@ class Payment extends BaseController
                         ]
                     )->update();
 
-                    $this->PuBooking->set('status', 'Y')->where('kd_booking', $invoice['kd_booking'])->update();
+
+                    if (!$updPay) {
+                        $this->PmCallback->save([
+                            'payload' => 'update payment gaberes',
+                            'received_date' => $ts
+                        ]);
+                    }
+
+                    $updBook = $this->PuBooking->set('status', 'Y')->where('kd_booking', $invoice['kd_booking'])->update();
+
+                    if (!$updBook) {
+                        $this->PuBooking->save([
+                            'payload' => 'update booking gaberes',
+                            'received_date' => $ts
+                        ]);
+                    }
 
                     break;
 
@@ -338,10 +353,11 @@ class Payment extends BaseController
                     break;
 
                 default:
-                    $this->PmCallback->save([
-                        'payload' => 'status ga beres',
+                    $this->PuBooking->save([
+                        'payload' => 'payment gaberes',
                         'received_date' => $ts
                     ]);
+
                     return json_encode([
                         'success' => false,
                         'message' => 'Unrecognized payment status',
