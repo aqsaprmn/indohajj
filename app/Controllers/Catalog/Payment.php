@@ -261,10 +261,10 @@ class Payment extends BaseController
         $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
-        // $this->PmCallback->save([
-        //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
-        //     'received_date' => $ts
-        // ]);
+        $this->PmCallback->save([
+            'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
+            'received_date' => $ts
+        ]);
 
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
@@ -337,7 +337,7 @@ class Payment extends BaseController
                     break;
 
                 default:
-                    $this->PuBooking->save([
+                    $this->PmCallback->save([
                         'payload' => 'payment gaberes',
                         'received_date' => $ts
                     ]);
