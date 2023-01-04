@@ -338,6 +338,10 @@ class Payment extends BaseController
                     break;
 
                 default:
+                    $this->PmCallback->save([
+                        'payload' => 'status ga beres',
+                        'received_date' => $ts
+                    ]);
                     return json_encode([
                         'success' => false,
                         'message' => 'Unrecognized payment status',
