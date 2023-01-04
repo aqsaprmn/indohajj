@@ -161,8 +161,8 @@ class Payment extends BaseController
 
         // $insPayment = $this->PuPayment->save($dataPayment);
 
-        var_dump($payment_ref_id);
-        die;
+        // var_dump($payment_ref_id);
+        // die;
 
         //r2(U.'prepaid/voucher-refill/'.$id, 'e', $res1.'-'.$user_id);
         // echo $payment_ref_id;
