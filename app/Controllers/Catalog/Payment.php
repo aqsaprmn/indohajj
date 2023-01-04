@@ -260,10 +260,10 @@ class Payment extends BaseController
         $uniqueRef = $data->merchant_ref;
         $status = strtoupper((string) $data->status);
 
-        $this->PmCallback->save([
-            'payload' => $status,
-            'received_date' => $ts
-        ]);
+        // $this->PmCallback->save([
+        //     'payload' => $status,
+        //     'received_date' => $ts
+        // ]);
 
         if ($data->is_closed_payment === 1) {
             $invoice = $this->PuPayment->where(
@@ -286,51 +286,50 @@ class Payment extends BaseController
                 ]);
             }
 
+            $dataPayment  = [
+                'updated_time_callback' => $ts,
+                'updated_status_callback' => 'SUKSES',
+                'updated_payload_callback' => $data
+            ];
+
             switch ($status) {
                 case 'PAID':
-                    $this->PuPayment->where(
+                    $dataPayment['status'] = "PAID";
+
+                    $this->PuPayment->set($dataPayment)->where(
                         [
                             'payment_ref_merchant' => $uniqueRef,
                             'status' => 'UNPAID'
                         ]
-                    )->update([
-                        'status' => 'PAID',
-                        'updated_time_callback' => $ts,
-                        'updated_status_callback' => 'SUKSES',
-                        'updated_payload_callback' => $data
-                    ]);
+                    )->update();
 
-                    $this->PuBooking->where('kd_booking', $invoice['kd_booking'])->update(['status' => 'Y']);
+                    $this->PuBooking->set('status', 'Y')->where('kd_booking', $invoice['kd_booking'])->update();
 
                     break;
 
                 case 'EXPIRED':
-                    $this->PuPayment->where(
+
+                    $dataPayment['status'] = "EXPIRED";
+
+                    $this->PuPayment->set($dataPayment)->where(
                         [
                             'payment_ref_merchant' => $uniqueRef,
                             'status' => 'UNPAID'
                         ]
-                    )->update([
-                        'status' => 'EXPIRED',
-                        'updated_time_callback' => $ts,
-                        'updated_status_callback' => 'SUKSES',
-                        'updated_payload_callback' => $data
-                    ]);
+                    )->update();
 
                     break;
 
                 case 'FAILED':
-                    $this->PuPayment->where(
+
+                    $dataPayment['status'] = "FAILED";
+
+                    $this->PuPayment->set($dataPayment)->where(
                         [
                             'payment_ref_merchant' => $uniqueRef,
                             'status' => 'UNPAID'
                         ]
-                    )->update([
-                        'status' => 'FAILED',
-                        'updated_time_callback' => $ts,
-                        'updated_status_callback' => 'SUKSES',
-                        'updated_payload_callback' => $data
-                    ]);
+                    )->update();
 
                     break;
 
