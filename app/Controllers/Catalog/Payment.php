@@ -261,6 +261,11 @@ class Payment extends BaseController
         $paymentRef = $data->reference;
         $status = strtoupper((string) $data->status);
 
+        $this->PmCallback->save([
+            'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
+            'received_date' => $ts
+        ]);
+
         if ($data->is_closed_payment === 1) {
             $invoice = $this->PuPayment->where(
                 [
@@ -287,6 +292,7 @@ class Payment extends BaseController
             }
 
             $dataPayment  = [
+                'status' => $status,
                 'updated_time_callback' => $ts,
                 'updated_status_callback' => 'SUKSES',
                 'updated_payload_callback' => $data
@@ -294,7 +300,6 @@ class Payment extends BaseController
 
             switch ($status) {
                 case 'PAID':
-                    $dataPayment['status'] = "PAID";
 
                     $this->PuPayment->set($dataPayment)->where(
                         [
@@ -310,8 +315,6 @@ class Payment extends BaseController
 
                 case 'EXPIRED':
 
-                    $dataPayment['status'] = "EXPIRED";
-
                     $this->PuPayment->set($dataPayment)->where(
                         [
                             'payment_ref_merchant' => (string) $uniqueRef,
@@ -323,8 +326,6 @@ class Payment extends BaseController
                     break;
 
                 case 'FAILED':
-
-                    $dataPayment['status'] = "FAILED";
 
                     $this->PuPayment->set($dataPayment)->where(
                         [
