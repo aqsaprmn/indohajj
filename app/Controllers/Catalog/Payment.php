@@ -259,9 +259,9 @@ class Payment extends BaseController
             ]);
         }
 
-        $uniqueRef = (string)$data->merchant_ref;
-        $paymentRef = (string)$data->reference;
-        $status = (string)$data->status;
+        // $uniqueRef = (string)$data->merchant_ref;
+        // $paymentRef = (string)$data->reference;
+        // $status = (string)$data->status;
 
         // $this->PmCallback->save([
         //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
@@ -271,8 +271,8 @@ class Payment extends BaseController
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    'payment_ref_id' => $paymentRef,
-                    'payment_ref_merchant' => $uniqueRef,
+                    'payment_ref_id' => (string)$data->reference,
+                    'payment_ref_merchant' => (string)$data->merchant_ref,
                     'status' => 'UNPAID'
                 ]
             )->first();
@@ -289,18 +289,18 @@ class Payment extends BaseController
                 ]);
                 return json_encode([
                     'success' => false,
-                    'message' => 'No invoice found or already paid: ' . $uniqueRef,
+                    'message' => 'No invoice found or already paid: ' . (string)$data->merchant_ref,
                 ]);
             }
 
             $this->PmCallback->save([
-                'payload' => $status . '-' . 'status gaberes',
+                'payload' => (string)$data->status . '-' . 'status gaberes',
                 'received_date' => $ts
             ]);
 
-            if ($status == "PAID") {
+            if ((string)$data->status == "PAID") {
                 $dataPayment  = [
-                    'status' => $status,
+                    'status' => (string)$data->status,
                     'updated_time_callback' => $ts,
                     'updated_status_callback' => 'SUKSES',
                     'updated_payload_callback' => $data
@@ -308,8 +308,8 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_id' => $paymentRef,
-                        'payment_ref_merchant' => $uniqueRef,
+                        'payment_ref_id' => (string)$data->reference,
+                        'payment_ref_merchant' => (string)$data->merchant_ref,
                         'status' => 'UNPAID'
                     ]
                 )->set($dataPayment)->update();
