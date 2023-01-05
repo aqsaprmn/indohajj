@@ -183,8 +183,8 @@ class Payment extends BaseController
 
     public function callback()
     {
-        return json_encode(['success' => true]);
-        die;
+        // return json_encode(['success' => true]);
+        // die;
         $callbackSignature = $this->request->getServer('HTTP_X_CALLBACK_SIGNATURE');
         // $callbackSignature = isset($_SERVER['HTTP_X_CALLBACK_SIGNATURE'])
         //     ? $_SERVER['HTTP_X_CALLBACK_SIGNATURE']
@@ -259,9 +259,9 @@ class Payment extends BaseController
             ]);
         }
 
-        $uniqueRef = (string) $data->merchant_ref;
-        $paymentRef = (string) $data->reference;
-        $status = strtoupper((string) $data->status);
+        $uniqueRef = (string)$data->merchant_ref;
+        $paymentRef = (string)$data->reference;
+        $status = (string)$data->status;
 
         // $this->PmCallback->save([
         //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
@@ -293,6 +293,11 @@ class Payment extends BaseController
                 ]);
             }
 
+            $this->PmCallback->save([
+                'payload' => $status . '-' . 'status gaberes',
+                'received_date' => $ts
+            ]);
+
             if ($status == "PAID") {
                 $dataPayment  = [
                     'status' => $status,
@@ -303,8 +308,8 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_id' => $invoice['payment_ref_id'],
-                        'payment_ref_merchant' => $invoice['payment_ref_merchant'],
+                        'payment_ref_id' => $paymentRef,
+                        'payment_ref_merchant' => $uniqueRef,
                         'status' => 'UNPAID'
                     ]
                 )->set($dataPayment)->update();
