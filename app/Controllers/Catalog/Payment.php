@@ -323,6 +323,8 @@ class Payment extends BaseController
                         'message' => 'Unrecognized payment status',
                     ]);
                 }
+
+                return json_encode(['success' => true]);
             } elseif ($status == "EXPIRED" || $status == "FAILED") {
                 $dataPayment  = [
                     'status' => $status,
@@ -350,6 +352,8 @@ class Payment extends BaseController
                         'message' => 'Unrecognized payment status',
                     ]);
                 }
+
+                return json_encode(['success' => true]);
             } else {
                 $this->PmCallback->save([
                     'payload' => 'payment gaberes',
@@ -361,8 +365,6 @@ class Payment extends BaseController
                     'message' => 'Unrecognized payment status',
                 ]);
             }
-
-            return json_encode(['success' => true]);
         }
     }
 }
