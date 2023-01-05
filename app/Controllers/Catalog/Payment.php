@@ -259,28 +259,18 @@ class Payment extends BaseController
             ]);
         }
 
-        // $uniqueRef = (string)$data->merchant_ref;
-        // $paymentRef = (string)$data->reference;
-        $status = (string)$data->status;
-
-        // $this->PmCallback->save([
-        //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
-        //     'received_date' => $ts
-        // ]);
+        $uniqueRef = (string)$data->merchant_ref;
+        $paymentRef = (string)$data->reference;
+        $status = strtoupper((string)$data->status);
 
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    // 'payment_ref_id' => (string)$data->reference,
-                    'payment_ref_merchant' => (string)$data->merchant_ref,
+                    'payment_ref_id' => $paymentRef,
+                    'payment_ref_merchant' => $uniqueRef,
                     'status' => 'UNPAID'
                 ]
             )->first();
-
-            // $this->PmCallback->save([
-            //     'payload' => $uniqueRef . '-' . $paymentRef,
-            //     'received_date' => $ts
-            // ]);
 
             if (!$invoice) {
                 $this->PmCallback->save([
@@ -289,30 +279,25 @@ class Payment extends BaseController
                 ]);
                 return json_encode([
                     'success' => false,
-                    'message' => 'No invoice found or already paid: ' . (string)$data->merchant_ref,
+                    'message' => 'No invoice found or already paid: ' . $uniqueRef,
                 ]);
             }
 
-            $this->PmCallback->save([
-                'payload' => (string)$data->status . '-' . 'status gaberes',
-                'received_date' => $ts
-            ]);
-
             if ($status == "PAID") {
                 $dataPayment  = [
-                    'status' => (string)$data->status,
+                    'status' => $status,
                     'updated_time_callback' => $ts,
                     'updated_status_callback' => 'SUKSES',
-                    'updated_payload_callback' => $data
+                    'updated_payload_callback' => $json
                 ];
 
-                $updPay = $this->PuPayment->where(
+                $updPay = $this->PuPayment->set($dataPayment)->where(
                     [
-                        // 'payment_ref_id' => (string)$data->reference,
-                        'payment_ref_merchant' => (string)$data->merchant_ref,
+                        'payment_ref_id' => $paymentRef,
+                        'payment_ref_merchant' => $uniqueRef,
                         'status' => 'UNPAID'
                     ]
-                )->set($dataPayment)->update();
+                )->update();
 
                 if (!$updPay) {
                     $this->PmCallback->save([
@@ -338,19 +323,17 @@ class Payment extends BaseController
                         'message' => 'Unrecognized payment status',
                     ]);
                 }
-
-                return json_encode(['success' => true]);
             } elseif ($status == "EXPIRED" || $status == "FAILED") {
                 $dataPayment  = [
                     'status' => $status,
                     'updated_time_callback' => $ts,
                     'updated_status_callback' => 'SUKSES',
-                    'updated_payload_callback' => $data
+                    'updated_payload_callback' => $json
                 ];
 
                 $updPay = $this->PuPayment->where(
                     [
-                        // 'payment_ref_id' => $invoice['payment_ref_id'],
+                        'payment_ref_id' => $invoice['payment_ref_id'],
                         'payment_ref_merchant' => $invoice['payment_ref_merchant'],
                         'status' => 'UNPAID'
                     ]
@@ -367,7 +350,6 @@ class Payment extends BaseController
                         'message' => 'Unrecognized payment status',
                     ]);
                 }
-                return json_encode(['success' => true]);
             } else {
                 $this->PmCallback->save([
                     'payload' => 'payment gaberes',
@@ -379,6 +361,8 @@ class Payment extends BaseController
                     'message' => 'Unrecognized payment status',
                 ]);
             }
+
+            return json_encode(['success' => true]);
         }
     }
 }
