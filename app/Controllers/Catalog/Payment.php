@@ -184,6 +184,7 @@ class Payment extends BaseController
     public function callback()
     {
         return json_encode(['success' => true]);
+        die;
         $callbackSignature = $this->request->getServer('HTTP_X_CALLBACK_SIGNATURE');
         // $callbackSignature = isset($_SERVER['HTTP_X_CALLBACK_SIGNATURE'])
         //     ? $_SERVER['HTTP_X_CALLBACK_SIGNATURE']
