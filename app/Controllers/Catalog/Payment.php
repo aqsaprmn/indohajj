@@ -261,7 +261,7 @@ class Payment extends BaseController
 
         // $uniqueRef = (string)$data->merchant_ref;
         // $paymentRef = (string)$data->reference;
-        // $status = (string)$data->status;
+        $status = (string)$data->status;
 
         // $this->PmCallback->save([
         //     'payload' => $uniqueRef . '-' . $paymentRef . '-' . $status,
@@ -271,7 +271,7 @@ class Payment extends BaseController
         if ($data->is_closed_payment == 1) {
             $invoice = $this->PuPayment->where(
                 [
-                    'payment_ref_id' => (string)$data->reference,
+                    // 'payment_ref_id' => (string)$data->reference,
                     'payment_ref_merchant' => (string)$data->merchant_ref,
                     'status' => 'UNPAID'
                 ]
@@ -298,7 +298,7 @@ class Payment extends BaseController
                 'received_date' => $ts
             ]);
 
-            if ((string)$data->status == "PAID") {
+            if ($status == "PAID") {
                 $dataPayment  = [
                     'status' => (string)$data->status,
                     'updated_time_callback' => $ts,
@@ -308,7 +308,7 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_id' => (string)$data->reference,
+                        // 'payment_ref_id' => (string)$data->reference,
                         'payment_ref_merchant' => (string)$data->merchant_ref,
                         'status' => 'UNPAID'
                     ]
@@ -350,7 +350,7 @@ class Payment extends BaseController
 
                 $updPay = $this->PuPayment->where(
                     [
-                        'payment_ref_id' => $invoice['payment_ref_id'],
+                        // 'payment_ref_id' => $invoice['payment_ref_id'],
                         'payment_ref_merchant' => $invoice['payment_ref_merchant'],
                         'status' => 'UNPAID'
                     ]
