@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 
 <div class="px-md-5 px-3 py-4 fs-7">
-    <div class="my-5 pt-4">
+    <div class="pt-4">
         <div class="mb-4">
             <h5>Pembayaran Reservasi</h5>
         </div>
@@ -68,12 +68,7 @@
                         </div>
                         <div id="" class="">
                             <div class="mb-1">
-                                <span class="text-secondary">Harga:</span>
-                            </div>
-                            <div class="d-flex flex-column justify-content-between mb-4">
-                                <div>
-                                    Total:
-                                </div>
+                                <span class="text-secondary">Harga</span>
                             </div>
                             <div class="d-flex justify-content-between">
 

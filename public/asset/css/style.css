@@ -427,6 +427,31 @@ div.btn-group:hover {
   background-color: #FF9451 !important;
 }
 
+.bg-gray {
+  --bs-bg-opacity: 1;
+  background-color: #e5e5e5 !important;
+}
+
+.bg-gray-white {
+  --bs-bg-opacity: 1;
+  background-color: #F8FBFC !important;
+}
+
+.bg-success-white {
+  --bs-bg-opacity: 1;
+  background-color: #b2e7ce !important;
+}
+
+.bg-warning-white {
+  --bs-bg-opacity: 1;
+  background-color: #fff3d0 !important;
+}
+
+.bg-danger-white {
+  --bs-bg-opacity: 1;
+  background-color: #ffe1e4 !important;
+}
+
 .bg-dongker {
   --bs-bg-opacity: 1;
   background-color: #2b5998 !important;

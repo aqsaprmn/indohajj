@@ -322,7 +322,6 @@ class Umrah extends BaseController
 
     public function checkout($kd_booking)
     {
-
         $data = [
             "title" => "Umrah",
             "active" => "umrah",
@@ -334,9 +333,10 @@ class Umrah extends BaseController
             $puBooking = $this->PuBooking->where('kd_booking', $kd_booking)->first();
 
             if ($puBooking) {
-                $data['pb'] = $puBooking;
 
-                if ($puBooking['status'] == "N") {
+                $data['pb'] = $puBooking;
+                $status = $puBooking['status'];
+                if ($status == "N") {
                     $usUser = $this->UsUserData->select('name')->where('username', $puBooking['username'])->first();
 
                     $puPaket = $this->PuPaket->where('kd_pu', $puBooking['kd_pu'])->first();
@@ -355,7 +355,7 @@ class Umrah extends BaseController
                         return view('errors/html/error_404.php', ['message' => 'Kode Booking Jamaah paket umrah tidak tersedia']);
                     }
                 } else {
-                    return redirect()->to(base_url() . '/umrah/confirm/' . $kd_booking);
+                    return redirect()->to(base_url() . '/informasiReservasi' . '/' . $kd_booking);
                 }
             } else {
                 return view('errors/html/error_404.php', ['message' => 'Kode Booking paket umrah tidak tersedia']);
@@ -400,178 +400,166 @@ class Umrah extends BaseController
         echo json_encode($data);
     }
 
-    public function payment()
-    {
-        //  Status
-        // 1. N = Belum upload bukti pembayaran
-        // 2. U = Sudah upload bukti pembayaran tetapi belum di konfirmasi admin
-        // 3. Y = Sudah di konfirmasi oleh admin
-
-        $kd_booking = $this->request->getPost('kdBooking');
-
-        $filePayment = $this->request->getFile('payment');
-
-        if (!$filePayment->hasMoved()) {
-            $newNamePayment = explode('.', $filePayment->getName());
-            $newNamePayment = "PAY_" . $kd_booking . '_' . date('dmY_his') . '.' . $newNamePayment[1];
-
-            if ($filePayment->move('public/upload/payment', $newNamePayment)) {
-                $insPayment = $this->PuPayment->save([
-                    "kd_booking" => $kd_booking,
-                    "img_proof_payment" => $newNamePayment
-                ]);
-
-                if ($insPayment) {
-                    $updStatBook = $this->PuBooking->set('status', 'U')->where('kd_booking', $kd_booking)->update();
-
-                    if ($updStatBook) {
-
-                        return redirect()->to(base_url() . '/umrah/confirm/' . $kd_booking)->with('pesan', 'uploadbuktisukses');
-                    } else {
-                        $this->PuPayment->where('kd_booking', $kd_booking)->delete();
-
-                        return redirect()->to(base_url() . '/umrah/checkout/' . $kd_booking)->with('pesan', 'uploadbuktigagal');
-                    }
-                } else {
-                    return redirect()->to(base_url() . '/umrah/checkout/' . $kd_booking)->with('pesan', 'uploadbuktigagal');
-                }
-            }
-        }
-    }
-
-    public function confirm($kd_booking)
-    {
-        $data = [
-            "title" => "Umrah",
-            "active" => "umrah",
-            "script" => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
-            'ceklogin' => ceklogin()
-        ];
-
-        if ($data['ceklogin']['logged_in'] == true) {
-            $puBooking = $this->PuBooking->where('kd_booking', $kd_booking)->first();
-
-            if ($puBooking) {
-                $puPaket = $this->PuPaket->select('nama, tgl_berangkat, tgl_pulang')->where('kd_pu', $puBooking['kd_pu'])->first();
-
-                $usUser = $this->UsUserData->where('username', $puBooking['username'])->first();
-
-                if ($puPaket && $usUser) {
-
-                    $data['pb'] = $puBooking;
-                    $data['pp'] = $puPaket;
-                    $data['ud'] = $usUser;
-
-                    return view('Catalog/Umrah/umrahkonfirmasi', $data);
-                } else {
-                }
-            } else {
-            }
-        } else {
-            return redirect()->to(base_url() . '/user/login')->with('checkout', 'checkout');
-        }
-    }
-
-    public function paymentonline()
-    {
-        $data = [
-            "title" => "Umrah",
-            "active" => "umrah",
-            "script" => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
-            'ceklogin' => ceklogin()
-        ];
-
-        return view('Catalog/Umrah/umrahpaymentonline', $data);
-    }
-
-    public function bookingPaket()
-    {
-        // dd($this->request->getFile('file'));
-
-        $idPaket = $this->request->getVar('id_paket');
-        $kdBooking = 'PU' . date('dmY') . rand(10000000, 99999999);
-        $nama = trim($this->request->getVar('nama'));
-        $noPass = trim($this->request->getVar('passport'));
-        $sex = trim($this->request->getVar('sex'));
-        $alamat = trim($this->request->getVar('address'));
-        $national = trim($this->request->getVar('national'));
-        $pob = trim($this->request->getVar('pob'));
-        $dob = trim($this->request->getVar('dob'));
-        $hp = trim($this->request->getVar('hp'));
-        $email = trim($this->request->getVar('email'));
-
-        $filePass = $this->request->getFile('file');
-
-        $data = [
-            'idPaket' => $idPaket,
-            'kdBooking' => $kdBooking
-        ];
-
-        if (!$filePass->hasMoved()) {
-            $namaFile = explode('.', $filePass->getName());
-            $namaFile = $namaFile[0] . '_' . date('dmY_his') . '.' . $namaFile[1];
-
-            $filePass->move('public/upload/pass', $namaFile);
-        }
-
-        $user = $this->db->query("INSERT INTO pu_booking VALUES ('', '$idPaket', '$kdBooking', '$nama', '$noPass', '$sex', '$alamat', '$national', '$pob', '$dob', '$hp', '$email', '$namaFile')");
-
-        if ($user) {
-            session()->setFlashdata('pesan', 'umrah sukses');
-            return redirect()->to(base_url() . '/umrah/bookingBukti/' . $data['idPaket'] . '/' . $data['kdBooking']);
-        } else {
-            session()->setFlashdata('pesan', 'umrah gagal');
-            return redirect()->to('/umrah');
-        }
-    }
-
-    public function bookingBukti($idPaket, $kdBooking)
-    {
-        $dataPU = $this->db->query("SELECT * FROM pu_paket WHERE id = $idPaket
-        ")->getRow();
-        $dataBooking = $this->db->query("SELECT * FROM pu_booking WHERE kd_booking = '$kdBooking'
-        ")->getRow();
-
-        $dataBook = [
-            'pu' => $dataPU,
-            'book' => $dataBooking
-        ];
-
-        $data = [
-            "title" => "Umrah",
-            "active" => "umrah",
-            'script' => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
-            "data" => $dataBook,
-            'ceklogin' => ceklogin()
-        ];
-
-        return view('Catalog/buktibooking', $data);
-    }
+    // public function payment()
+    // {
 
 
-    public function paspor()
-    {
-        $data = [
-            "title" => "Umrah",
-            "active" => "umrah",
-            'script' => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
-            'ceklogin' => ceklogin()
-        ];
+    //     $kd_booking = $this->request->getPost('kdBooking');
 
-        return view('mrzreader', $data);
-    }
+    //     $filePayment = $this->request->getFile('payment');
+
+    //     if (!$filePayment->hasMoved()) {
+    //         $newNamePayment = explode('.', $filePayment->getName());
+    //         $newNamePayment = "PAY_" . $kd_booking . '_' . date('dmY_his') . '.' . $newNamePayment[1];
+
+    //         if ($filePayment->move('public/upload/payment', $newNamePayment)) {
+    //             $insPayment = $this->PuPayment->save([
+    //                 "kd_booking" => $kd_booking,
+    //                 "img_proof_payment" => $newNamePayment
+    //             ]);
+
+    //             if ($insPayment) {
+    //                 $updStatBook = $this->PuBooking->set('status', 'U')->where('kd_booking', $kd_booking)->update();
+
+    //                 if ($updStatBook) {
+
+    //                     return redirect()->to(base_url() . '/umrah/confirm/' . $kd_booking)->with('pesan', 'uploadbuktisukses');
+    //                 } else {
+    //                     $this->PuPayment->where('kd_booking', $kd_booking)->delete();
+
+    //                     return redirect()->to(base_url() . '/umrah/checkout/' . $kd_booking)->with('pesan', 'uploadbuktigagal');
+    //                 }
+    //             } else {
+    //                 return redirect()->to(base_url() . '/umrah/checkout/' . $kd_booking)->with('pesan', 'uploadbuktigagal');
+    //             }
+    //         }
+    //     }
+    // }
+
+    // public function confirm($kd_booking)
+    // {
+    //     $data = [
+    //         "title" => "Umrah",
+    //         "active" => "umrah",
+    //         "script" => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
+    //         'ceklogin' => ceklogin()
+    //     ];
+
+    //     if ($data['ceklogin']['logged_in'] == true) {
+    //         $puBooking = $this->PuBooking->where('kd_booking', $kd_booking)->first();
+
+    //         if ($puBooking) {
+    //             $puPaket = $this->PuPaket->select('nama, tgl_berangkat, tgl_pulang')->where('kd_pu', $puBooking['kd_pu'])->first();
+
+    //             $usUser = $this->UsUserData->where('username', $puBooking['username'])->first();
+
+    //             if ($puPaket && $usUser) {
+
+    //                 $data['pb'] = $puBooking;
+    //                 $data['pp'] = $puPaket;
+    //                 $data['ud'] = $usUser;
+
+    //                 return view('Catalog/Umrah/umrahkonfirmasi', $data);
+    //             } else {
+    //             }
+    //         } else {
+    //         }
+    //     } else {
+    //         return redirect()->to(base_url() . '/user/login')->with('checkout', 'checkout');
+    //     }
+    // }
+
+    // public function paymentonline()
+    // {
+    //     $data = [
+    //         "title" => "Umrah",
+    //         "active" => "umrah",
+    //         "script" => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
+    //         'ceklogin' => ceklogin()
+    //     ];
+
+    //     return view('Catalog/Umrah/umrahpaymentonline', $data);
+    // }
+
+    // public function bookingPaket()
+    // {
+    //     // dd($this->request->getFile('file'));
+
+    //     $idPaket = $this->request->getVar('id_paket');
+    //     $kdBooking = 'PU' . date('dmY') . rand(10000000, 99999999);
+    //     $nama = trim($this->request->getVar('nama'));
+    //     $noPass = trim($this->request->getVar('passport'));
+    //     $sex = trim($this->request->getVar('sex'));
+    //     $alamat = trim($this->request->getVar('address'));
+    //     $national = trim($this->request->getVar('national'));
+    //     $pob = trim($this->request->getVar('pob'));
+    //     $dob = trim($this->request->getVar('dob'));
+    //     $hp = trim($this->request->getVar('hp'));
+    //     $email = trim($this->request->getVar('email'));
+
+    //     $filePass = $this->request->getFile('file');
+
+    //     $data = [
+    //         'idPaket' => $idPaket,
+    //         'kdBooking' => $kdBooking
+    //     ];
+
+    //     if (!$filePass->hasMoved()) {
+    //         $namaFile = explode('.', $filePass->getName());
+    //         $namaFile = $namaFile[0] . '_' . date('dmY_his') . '.' . $namaFile[1];
+
+    //         $filePass->move('public/upload/pass', $namaFile);
+    //     }
+
+    //     $user = $this->db->query("INSERT INTO pu_booking VALUES ('', '$idPaket', '$kdBooking', '$nama', '$noPass', '$sex', '$alamat', '$national', '$pob', '$dob', '$hp', '$email', '$namaFile')");
+
+    //     if ($user) {
+    //         session()->setFlashdata('pesan', 'umrah sukses');
+    //         return redirect()->to(base_url() . '/umrah/bookingBukti/' . $data['idPaket'] . '/' . $data['kdBooking']);
+    //     } else {
+    //         session()->setFlashdata('pesan', 'umrah gagal');
+    //         return redirect()->to('/umrah');
+    //     }
+    // }
+
+    // public function bookingBukti($idPaket, $kdBooking)
+    // {
+    //     $dataPU = $this->db->query("SELECT * FROM pu_paket WHERE id = $idPaket
+    //     ")->getRow();
+    //     $dataBooking = $this->db->query("SELECT * FROM pu_booking WHERE kd_booking = '$kdBooking'
+    //     ")->getRow();
+
+    //     $dataBook = [
+    //         'pu' => $dataPU,
+    //         'book' => $dataBooking
+    //     ];
+
+    //     $data = [
+    //         "title" => "Umrah",
+    //         "active" => "umrah",
+    //         'script' => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
+    //         "data" => $dataBook,
+    //         'ceklogin' => ceklogin()
+    //     ];
+
+    //     return view('Catalog/buktibooking', $data);
+    // }
+
+
+    // public function paspor()
+    // {
+    //     $data = [
+    //         "title" => "Umrah",
+    //         "active" => "umrah",
+    //         'script' => "<script src='" . base_url() . "/public/asset/js/script.js'></script>",
+    //         'ceklogin' => ceklogin()
+    //     ];
+
+    //     return view('mrzreader', $data);
+    // }
 
     public function mrz()
     {
-
-        // $linkfile = urlencode(base_url() . "/public/upload/mrz");
-        // $linkfile = base64_encode(base_url() . "/public/upload/mrz");
-
-        // $data = [
-        //     'status' => "sukses",
-        //     "file" => $_FILES['file']
-        // ];
-
         $validator = [
             'file' => [
                 'rules' => 'max_size[file,2048]|is_image[file]|mime_in[file,image/jpg,image/png,image/jpeg]',

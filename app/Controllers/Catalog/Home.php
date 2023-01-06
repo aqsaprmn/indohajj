@@ -124,13 +124,72 @@ class Home extends BaseController
         ];
         // dd(ceklogin());
         if (ceklogin()['logged_in'] == false) {
-
             return redirect()->to(base_url())->with('ilegal', 'ilegalreservasi');
         }
 
-        $puBooking = $this->PuBooking->select('*')->where(['pu_booking.kd_booking' => $kd_booking, 'pu_booking.username' => ceklogin()['user']['username']])->join('pu_jamaah', 'pu_jamaah.kd_booking = pu_booking.kd_booking', 'inner')->join('pu_paket', 'pu_paket.kd_pu = pu_booking.kd_pu', 'inner')->join('pu_payment', 'pu_payment.kd_booking = pu_booking.kd_booking')->first();
+        $puBooking = $this->PuBooking->select(
+            'pu_booking.kd_booking,
+            pu_booking.created_at,
+            pu_booking.total_paket,
+            pu_booking.total_jamaah,
+            pu_jamaah_paspor.kd_jamaah,
+            pu_jamaah_paspor.nama as nama_paspor,
+            pu_jamaah_paspor.no_paspor,
+            pu_jamaah_paspor.dob,
+            pu_jamaah_paspor.nationality,
+            pu_jamaah_paspor.sex,
+            pu_jamaah_paspor.image,
+            pu_jamaah_harga.tipe,
+            pu_jamaah_harga.harga,
+            pu_paket.kd_pu,
+            pu_paket.nama as nama_paket,
+            pu_paket.reservasi,
+            pu_paket.tgl_berangkat,
+            pu_paket.tgl_pulang,
+            pu_paket.maskapai,
+            pu_paket.tipe,
+            pu_payment.status,
+            pu_payment.amount,
+            pu_payment.payment_ref_id,
+            pu_payment.time_request,
+            pu_payment.time_expired,
+            pu_payment.payment_ref_merchant'
+        )->where(
+            [
+                'pu_booking.kd_booking' => $kd_booking,
+                'pu_booking.username' => ceklogin()['user']['username']
+            ]
+        )->join(
+            'pu_jamaah_paspor',
+            'pu_jamaah_paspor.kd_booking = pu_booking.kd_booking',
+            'inner'
+        )->join(
+            'pu_jamaah_harga',
+            'pu_jamaah_harga.kd_booking = pu_booking.kd_booking',
+            'inner'
+        )->join(
+            'pu_paket',
+            'pu_paket.kd_pu = pu_booking.kd_pu',
+            'inner'
+        )->join(
+            'pu_payment',
+            'pu_payment.kd_booking = pu_booking.kd_booking',
+            'left'
+        )->first();
 
-        // dd($puBooking);
+        $data['pb'] = $puBooking;
+
+        if ($puBooking['status'] == "UNPAID") {
+            $time =  $data['pb']['time_expired'] . '-' . date('Y-m-d H:i:s');
+            $time2 = strtotime($data['pb']['time_expired']) - strtotime(date('Y-m-d H:i:s'));
+            $hours = floor($time2 / 3600);
+            $minutes = floor($time2 / 60) % 60;
+
+            $expired_at = $hours . ' JAM - ' . $minutes . ' MENIT';
+            $data['pb']['expired_at'] = $expired_at;
+        }
+
+        // dd($data);
 
         return view('Catalog/Profile/reserveDetail', $data);
     }

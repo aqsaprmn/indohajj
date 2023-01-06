@@ -10,7 +10,7 @@
         <small class="text-secondary px-0">Informasi berisi hasil dari penginputan reservasi yang sudah dilakukan oleh pengguna</small>
     </div>
     <div class="row my-4 mx-md-5 mx-0 px-0 position-relative overflow-x-auto">
-        <div class="col-lg-8 px-0">
+        <div class="col-12 px-0">
             <table id="info-reserve" class="table table-bordered table-striped table-hover pt-3 ">
                 <thead class="thead-dark">
                     <tr>
@@ -52,15 +52,15 @@
                                         Lunas
                                     <?php endif; ?>
                                 </td>
-                                <td class="text-center d-flex">
+                                <td class="d-flex justify-content-center">
                                     <?php if ($r['status_payment'] == "UNPAID") : ?>
-                                        <a href="https://tripay.co.id/checkout/<?= $r['payment_ref_id'] ?>" class="btn btn-success">Pelunasan</a>
+                                        <a href="https://tripay.co.id/checkout/<?= $r['payment_ref_id'] ?>" class="btn btn-success w-55">Pelunasan <i class="fa-solid fa-file-invoice"></i></a>
                                     <?php elseif ($r['status_payment'] == null) : ?>
-                                        <a href="<?= base_url() ?>/umrah/checkout/<?= $r['kd_booking'] ?>" class="btn btn-warning">Pembayaran</a>
+                                        <a style="" href="<?= base_url() ?>/umrah/checkout/<?= $r['kd_booking'] ?>" class="btn btn-warning w-55 white-space-nowrap">Pembayaran <i class="fa-solid fa-file-invoice-dollar"></i></a>
                                     <?php else : ?>
-                                        <a href="" class="btn btn-danger">Bukti <i class="fa-regular fa-file-pdf ms-1 "></i></a>
+                                        <a href="" class="btn btn-danger white-space-nowrap w-55">Bukti <i class="fa-regular fa-file-pdf ms-1 "></i></a>
                                     <?php endif; ?>
-                                    <a class="btn btn-dongker ms-1" href="<?= base_url() ?>/informasiReservasi/<?= $r['kd_booking'] ?>">Detail</a>
+                                    <a class="btn btn-dongker ms-1 w-35 white-space-nowrap" href="<?= base_url() ?>/informasiReservasi/<?= $r['kd_booking'] ?>">Detail <i class="fa-brands fa-codepen"></i></a>
                                 </td>
                             </tr>
                             <?php $no++ ?>

@@ -47,6 +47,7 @@ class Payment extends BaseController
 
     public function index()
     {
+
         // d($this->request->getBody);
         // dd((string)$this->request->getRawInput);
         $paymentaway = $this->request->getPost('payment');
@@ -82,7 +83,9 @@ class Payment extends BaseController
         $fullname = $ud['name'];
         //r2(U.'prepaid/voucher-refill/'.$id, 'e', $amount.'-'.$user_id);
         $phonenumber = ($us['hp'] == "") ? $us['email'] : $us['hp'];
-        $merchantRef = 'R' . date('YmdHis') . $user_id; // example code transaction in your merchant
+        $merchantRef = 'R' . date('YmdHis') . $user_id;
+        $expired = (time() + (24 * 60 * 60));
+        // example code transaction in your merchant
         $data = [
             'method'            => 'QRIS2',
             'merchant_ref'      => $merchantRef,
@@ -100,7 +103,7 @@ class Payment extends BaseController
             ],
             'callback_url'      => 'http://indohajj.com/indohajj/payment/callback',
             'return_url'        => 'http://indohajj.com/indohajj/informasiReservasi',
-            'expired_time'      => (time() + (24 * 60 * 60)), // 24 jam
+            'expired_time'      => $expired, // 24 jam
             // 'expired_time'      => (time() + (30 * 60)), // 24 jam
             'signature'         => hash_hmac('sha256', $merchantCode . $merchantRef . $amount, $this->privateKey)
         ];
@@ -155,9 +158,9 @@ class Payment extends BaseController
             'amount' => $amount,
             'channel' => $channel,
             'time_request' => date('Y-m-d H:i:s'),
+            'time_expired' => date('Y-m-d H:i:s', $expired),
             'payload_request' => $res1,
         ];
-
 
         // $insPayment = $this->PuPayment->save($dataPayment);
 
@@ -168,8 +171,9 @@ class Payment extends BaseController
         // echo $payment_ref_id;
         // die;
         if ($request_status == 'SUKSES') {
+            $updBooking = $this->PuBooking->set('status', 'U')->where('kd_booking', $kd_booking);
             $insPayment = $this->PuPayment->save($dataPayment);
-            if ($insPayment) {
+            if ($insPayment && $updBooking) {
                 return redirect()->to('https://tripay.co.id/checkout/' . $payment_ref_id);
             } else {
                 return redirect()->to(base_url() . '/umrah')->with('payment', 'gagalinput');
