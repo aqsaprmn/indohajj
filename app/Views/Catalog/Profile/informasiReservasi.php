@@ -19,7 +19,7 @@
                         <th class="white-space-nowrap">Nama Paket</th>
                         <th class="white-space-nowrap">Total Paket</th>
                         <th class="text-center white-space-nowrap">Status Pembayaran</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center`">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,7 @@
                                     <?php elseif ($r['status_payment'] == null) : ?>
                                         <a style="" href="<?= base_url() ?>/umrah/checkout/<?= $r['kd_booking'] ?>" class="btn btn-warning w-55 white-space-nowrap">Pembayaran <i class="fa-solid fa-file-invoice-dollar"></i></a>
                                     <?php else : ?>
-                                        <a href="" class="btn btn-danger white-space-nowrap w-55">Bukti <i class="fa-regular fa-file-pdf ms-1 "></i></a>
+                                        <a href="<?= base_url() ?>/bukti/umrah/<?= $r['kd_booking'] ?>" class="btn btn-danger white-space-nowrap w-55">Bukti <i class="fa-regular fa-file-pdf ms-1 "></i></a>
                                     <?php endif; ?>
                                     <a class="btn btn-dongker ms-1 w-35 white-space-nowrap" href="<?= base_url() ?>/informasiReservasi/<?= $r['kd_booking'] ?>">Detail <i class="fa-brands fa-codepen"></i></a>
                                 </td>

@@ -5,8 +5,11 @@ namespace App\Controllers\Catalog;
 use App\Controllers\BaseController;
 use App\Models\PuBooking;
 use App\Models\PuPaket;
+use App\Models\PuPayment;
 use App\Models\UserDataModel;
 use App\Models\UserModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class Home extends BaseController
 {
@@ -14,12 +17,16 @@ class Home extends BaseController
     protected $UserDataModel;
     protected $DataSessUser;
     protected $PuBooking;
+    protected $PuPaket;
+    protected $PuPayment;
     protected $helpers = ['ceklogin_helper'];
     public function __construct()
     {
         $this->UserModel = new UserModel();
         $this->UserDataModel = new UserDataModel();
         $this->PuBooking = new PuBooking();
+        $this->PuPaket = new PuPaket();
+        $this->PuPayment = new PuPayment();
     }
 
     public function index()
@@ -192,5 +199,64 @@ class Home extends BaseController
         // dd($data);
 
         return view('Catalog/Profile/reserveDetail', $data);
+    }
+
+    public function bukti($tipe, $kd_booking)
+    {
+        $params = ['tipe' => $tipe];
+        $filename = "";
+        $data = [];
+        if ($tipe == "umrah") {
+            $pb = $this->PuBooking->select(
+                'kd_pu, kd_booking, username, total_paket, created_at'
+            )
+                ->where('kd_booking', $kd_booking)
+                ->first();
+            $us = $this->UserModel->select(
+                'email, hp'
+            )
+                ->where('username', $pb['username'])
+                ->first();
+            $usd = $this->UserDataModel->select(
+                'name as nama_reserve,
+                    address'
+            )
+                ->where('username', $pb['username'])
+                ->first();
+            $pu = $this->PuPaket->select(
+                'nama'
+            )
+                ->where('kd_pu', $pb['kd_pu'])
+                ->first();
+            $pp = $this->PuPayment->select(
+                'status, payment_ref_id, payment_ref_merchant, amount, paid_date'
+            )
+                ->where('kd_booking', $kd_booking)
+                ->first();
+
+            $data = array_merge($params, $pb, $pu, $pp, $us, $usd);
+
+            // dd($data);
+
+            $filename = "Bukti-Reservasi-" . $pb['kd_booking'];
+        }
+        // dd($_SERVER['DOCUMENT_ROOT']);
+        $html = view('Catalog/Profile/reserveBukti', $data);
+
+
+
+        $dompdf = new Dompdf(['isRemoteEnabled' => true]);
+        // $dompdf->set_base_path(realpath(FCPATH . '/assets/plugins/bootstrap/css/bootstrap.css'));
+        // $options = new Options();
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->render();
+        $dompdf->stream(
+            $filename . ".pdf",
+            ["Attachment" => false]
+        );
+
+        exit;
     }
 }

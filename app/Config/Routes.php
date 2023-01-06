@@ -41,6 +41,7 @@ $routes->get('/', 'Catalog\Home::index');
 $routes->get('/profile', 'Catalog\Home::myProfile');
 $routes->get('/informasiReservasi', 'Catalog\Home::informasiReservasi');
 $routes->get('/informasiReservasi/(:any)', 'Catalog\Home::detail/$1');
+$routes->get('/bukti/(:any)/(:any)', 'Catalog\Home::bukti/$1/$2');
 
 $routes->get('/user', 'Catalog\User::role');
 $routes->get('/user/login', 'Catalog\User::login');

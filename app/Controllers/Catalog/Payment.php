@@ -290,6 +290,7 @@ class Payment extends BaseController
             if ($status == "PAID") {
                 $dataPayment  = [
                     'status' => $status,
+                    'paid_date' => date('Y-m-d H:i:s', $data->paid_at),
                     'updated_time_callback' => $ts,
                     'updated_status_callback' => 'SUKSES',
                     'updated_payload_callback' => $json
@@ -332,6 +333,7 @@ class Payment extends BaseController
             } elseif ($status == "EXPIRED" || $status == "FAILED") {
                 $dataPayment  = [
                     'status' => $status,
+                    'paid_date' => NULL,
                     'updated_time_callback' => $ts,
                     'updated_status_callback' => 'SUKSES',
                     'updated_payload_callback' => $json
