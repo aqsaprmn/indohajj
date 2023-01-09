@@ -163,7 +163,7 @@
                                             <input type="text" class="form-control rounded-5 px-3 py-2 mrzpas<?= $i ?>" id="" name="mrzpas<?= $i ?>" placeholder="Masukkan kode MRZ" value="<?= old('mrzpas'); ?>">
                                             <small class="text-secondary">Tidak wajib diisi</small>
                                         </div>
-                                        <div class="mt-md-5 mt-0 mb-md-0 mb-3 row px-0 mx-0">
+                                        <div class="mt-md-4 mt-0 mb-md-0 mb-3 row px-0 mx-0">
                                             <button id="" name="before<?= $i ?>" type="button" class="btn btn-sea form-control rounded-5">Sebelumnya</button>
                                         </div>
                                     </div>

@@ -215,12 +215,17 @@ class Umrah extends BaseController
                 return redirect()->to(base_url() . '/adminuser/paketumrah')->with('prefix', 'prefixnotupdate');
             }
 
-            if (!$filektp->hasMoved()) {
-                $newNameKtp = explode('.', $filektp->getName());
-                $newNameKtp = $newNameKtp[0] . now() . '.' . $newNameKtp[1];
+            if ($filektp) {
+                if (!$filektp->hasMoved()) {
+                    $newNameKtp = explode('.', $filektp->getName());
+                    $newNameKtp = 'KTP_' . date('dmY_His') . '.' . $newNameKtp[1];
 
-                $filektp->move('public/upload/ktp', $newNameKtp);
+                    $filektp->move('public/upload/ktp', $newNameKtp);
+                }
+            } else {
+                $newNameKtp = NULL;
             }
+
 
             $dataJamaah = [
                 'kd_jamaah' => $kd_jamaah,
@@ -254,11 +259,15 @@ class Umrah extends BaseController
             $nationalitypas = trim($this->request->getPost('nationalitypas' . $i));
             $mrzpas = trim($this->request->getPost('mrzpas' . $i));
 
-            if (!$filepaspor->hasMoved()) {
-                $newNamePass = explode('.', $filepaspor->getName());
-                $newNamePass = 'MRZ_' . date('dmY_his') . '.' . $newNamePass[1];
+            if ($filepaspor) {
+                if (!$filepaspor->hasMoved()) {
+                    $newNamePass = explode('.', $filepaspor->getName());
+                    $newNamePass = 'MRZ_' . date('dmY_his') . '.' . $newNamePass[1];
 
-                $filepaspor->move('public/upload/pass', $newNamePass);
+                    $filepaspor->move('public/upload/pass', $newNamePass);
+                }
+            } else {
+                $newNamePass = NULL;
             }
 
             $dataJamaahPaspor = [
@@ -361,7 +370,9 @@ class Umrah extends BaseController
                     return redirect()->to(base_url() . '/informasiReservasi' . '/' . $kd_booking);
                 }
             } else {
-                return view('errors/html/error_404.php', ['message' => 'Kode Booking paket umrah tidak tersedia']);
+                // return view('errors/html/error_404.php', ['message' => 'Kode Booking paket umrah tidak tersedia']);
+
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         } else {
             return redirect()->to(base_url() . '/user/login')->with('checkout', 'checkout');
@@ -385,9 +396,7 @@ class Umrah extends BaseController
                     }
                 }
             }
-        }
 
-        for ($i = 0; $i < count($puJamaah); $i++) {
             foreach ($puJamaahHarga as $key => $value) {
                 // d($puJamaahHarga[$i]);
                 if ($key == $i) {
