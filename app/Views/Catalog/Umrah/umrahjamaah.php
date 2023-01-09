@@ -42,7 +42,7 @@
                                         <div class="col-md-6 px-1">
                                             <div class="mb-3 ">
                                                 <label for="file" class="form-label">Isi Data Otomatis? Unggah KTP</label>
-                                                <input class="form-control rounded-5 px-3 py-2 ktp<?= $i ?>" type="file" id="" name="ktp<?= $i ?>">
+                                                <input class="form-control rounded-5 px-3 py-2 ktp<?= $i ?>" type="file" id="" name="ktp<?= $i ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nama" class="form-label">Nama Lengkap</label>
@@ -103,7 +103,7 @@
                                     <div class="col-md-6 px-1">
                                         <div class="mb-3">
                                             <label for="paspor" class="form-label">Unggah Paspor</label>
-                                            <input class="form-control rounded-5 px-3 py-2 paspor<?= $i ?>" type="file" id="" name="paspor<?= $i ?>">
+                                            <input class="form-control rounded-5 px-3 py-2 paspor<?= $i ?>" type="file" id="" name="paspor<?= $i ?>" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="namapas" class="form-label">Nama Lengkap</label>
