@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 
 <div class="px-md-5 px-0 py-4 fs-7">
-    <div class="px-md-5 pt-4 p-0 mx-md-5 mx-3 my-5">
+    <div class="px-lg-5 px-md-1 p-0 mx-md-5 mx-4 my-5">
         <div class="mb-4">
             <a href="<?= base_url() ?>/umrah/<?= $ddu['kd_pu'] ?>" class="text-secondary text-decoration-none"><i class="fa-solid fa-chevron-left me-1"></i> Kembali rencana perjalanan</a>
         </div>
@@ -30,7 +30,7 @@
                         <div class="tab-content" id="nav-tabContent<?= $i ?>">
                             <div class="tab-pane fade show active pt-2" id="nav-ktp<?= $i ?>" role="tabpanel" aria-labelledby="nav-ktp-tab<?= $i ?>" tabindex="0">
                                 <div class="row py-3 mx-0 px-0 d-none framektp<?= $i ?> justify-content-center">
-                                    <div style="width: 320px;" class="position-relative border border-1 rounded-2 p-2 col-lg-6">
+                                    <div style="width: 320px; height: 200px;" class="position-relative border border-1 rounded-2 p-2 col-lg-6">
                                         <img class="w-100 h-100 mb-3" src="" name="imgktp<?= $i ?>" alt="">
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-5 row px-0 mx-0">
+                                            <div class="mt-md-5 mt-0 mb-md-0 mb-3 row px-0 mx-0">
                                                 <button id="" name="next<?= $i ?>" type="button" class="btn btn-sea rounded-5">Selanjutnya</button>
                                             </div>
                                         </div>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="tab-pane fade pt-3 px-0 position-relative" id="nav-paspor<?= $i ?>" role="tabpanel" aria-labelledby="nav-paspor-tab<?= $i ?>" tabindex="0">
                                 <div class="row mx-0 px-0 py-3 d-none framepas<?= $i ?> justify-content-center">
-                                    <div class="position-relative col-lg-6 border border-1 rounded-2 p-2" style="width: 320px;">
+                                    <div class="position-relative col-lg-6 border border-1 rounded-2 p-2" style="width: 320px; height: 200px">
                                         <img class="w-100 h-100 mb-3" src="" name="imgpaspor<?= $i ?>" alt="">
                                     </div>
                                 </div>
@@ -160,9 +160,10 @@
                                         </div> -->
                                         <div class="mb-3">
                                             <label for="mrzpas" class="form-label">Kode MRZ</label>
-                                            <input type="text" class="form-control rounded-5 px-3 py-2 mrzpas<?= $i ?>" id="" name="mrzpas<?= $i ?>" placeholder="Masukkan kode MRZ" value="<?= old('mrzpas'); ?>" required>
+                                            <input type="text" class="form-control rounded-5 px-3 py-2 mrzpas<?= $i ?>" id="" name="mrzpas<?= $i ?>" placeholder="Masukkan kode MRZ" value="<?= old('mrzpas'); ?>">
+                                            <small class="text-secondary">Tidak wajib diisi</small>
                                         </div>
-                                        <div class="mt-5 row px-0 mx-0">
+                                        <div class="mt-md-5 mt-0 mb-md-0 mb-3 row px-0 mx-0">
                                             <button id="" name="before<?= $i ?>" type="button" class="btn btn-sea form-control rounded-5">Sebelumnya</button>
                                         </div>
                                     </div>
@@ -427,7 +428,7 @@
                                     // position: 'top-end',
                                     icon: 'error',
                                     title: 'Upload Paspor Gagal',
-                                    text: textError,
+                                    text: "Silahkan upload paspor anda",
                                     // timer: 3000
                                 }).then((result) => {
                                     $("[name=loadermrz" + i + "]").addClass("d-none");
@@ -509,10 +510,9 @@
                                 $("[name=loadermrz" + i + "]").addClass("d-none");
                             })
                         }
-
                     },
-                    error: function(xhr, thrownError) {
-                        // console.log(xhr, thrownError);
+                    error: function(result) {
+                        console.log(result);
                         Swal.fire({
                             // position: 'top-end',
                             icon: 'error',
@@ -523,7 +523,6 @@
                             $("[name=loadermrz" + i + "]").addClass("d-none");
                         })
                     }
-
                 })
             })
         });

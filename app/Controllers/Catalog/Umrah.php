@@ -12,7 +12,10 @@ use App\Models\PuPaket;
 use App\Models\PuPayment;
 use App\Models\PuRemaining;
 use App\Models\UserDataModel;
+use Error;
 use \GuzzleHttp\Exception;
+
+use function PHPUnit\Framework\throwException;
 
 // #[AllowDynamicProperties]
 class Umrah extends BaseController
@@ -595,12 +598,15 @@ class Umrah extends BaseController
             ];
         }
 
+        // return "sukses";    
+
         echo json_encode($data);
     }
 
     private function reader($namaFile)
     {
         // require './vendor/autoload.php';
+
 
         /**
          * path to file
@@ -612,38 +618,39 @@ class Umrah extends BaseController
          */
         $token = "50838c10a1msh40ae01770f13904p155ec3jsn549ef900c6f7";
 
-        /**
-         * document type 'ktp', 'npwp', 'sim-2019'
-         */
         // $type = 'ktp';
 
         $url = 'https://mrz-scanner.p.rapidapi.com/ScanMRZ';
 
 
         if (!$path) {
-            throw new Error('path not set');
+            throw new \Exception('path not set');
         }
 
         if (!$token) {
-            throw new Error('path not set');
+            throw new \Exception('token not set');
         }
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', "$url", [
-            'headers' => ['X-RapidAPI-Host' => "mrz-scanner.p.rapidapi.com", 'X-RapidAPI-Key' => "$token"],
-            'multipart' => [
-                [
-                    'name'     => 'image',
-                    'contents' => fopen($path, 'rb'),
-                    'filename' => basename($path)
-                ],
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', "$url", [
+                'headers' => ['X-RapidAPI-Host' => "mrz-scanner.p.rapidapi.com", 'X-RapidAPI-Key' => "$token"],
+                'multipart' => [
+                    [
+                        'name'     => 'image',
+                        'contents' => fopen($path, 'rb'),
+                        'filename' => basename($path)
+                    ],
+                ]
+            ]);
 
-        $dataOCR = $response->getBody()->getContents();
+            $dataMrz = $response->getBody()->getContents();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $dataMrz = $e->getMessage();
+        }
 
-        return $dataOCR;
+        return $dataMrz;
 
         // $curl = curl_init();
 

@@ -447,8 +447,6 @@ class User extends BaseController
 
     public function ocrKTP($file)
     {
-        require './vendor/autoload.php';
-
         /**
          * path to file
          */
@@ -468,27 +466,31 @@ class User extends BaseController
 
 
         if (!$path) {
-            throw new Error('path not set');
+            throw new \Exception('path not set');
         }
 
         if (!$token) {
-            throw new Error('path not set');
+            throw new \Exception('path not set');
         }
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('PUT', "$url/$type", [
-            'headers' => ['Authentication' => "bearer $token"],
-            'multipart' => [
-                [
-                    'name'     => 'file',
-                    'contents' => fopen($path, 'rb'),
-                    'filename' => basename($path)
-                ],
-            ]
-        ]);
+        try {
+            $response = $client->request('PUT', "$url/$type", [
+                'headers' => ['Authentication' => "bearer $token"],
+                'multipart' => [
+                    [
+                        'name'     => 'file',
+                        'contents' => fopen($path, 'rb'),
+                        'filename' => basename($path)
+                    ],
+                ]
+            ]);
 
-        $dataOCR = $response->getBody()->getContents();
+            $dataOCR = $response->getBody()->getContents();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $dataOCR = $e->getMessage();
+        }
 
         return $dataOCR;
     }
