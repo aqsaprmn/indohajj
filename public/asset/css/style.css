@@ -610,9 +610,9 @@ div.btn-group:hover {
 }
 
 .service-list .list:hover {
-  position: absolute;
+  position: relative;
   z-index: 100;
-  transform: translate(20px, 12px);
+  transform: translate(24px, 18px);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 

@@ -108,7 +108,7 @@
                 <h2 class=" fw-semibold">Teknologi, Cepat, dan langsung berangkat dengan siap</h2>
             </div>
             <div class="mb-4 text-secondary">
-                <p>Indohajj merupakan perusahaan yang bergerak dibidang pelayanan jasa untuk proses perjalanan <span class=" fw-bold">Haji-Umroh-Tour & Travel</span>. Dengan proses serba digital semua dapat dilakukan dengan cepat. Berfokus kepada sapapun yang ingin berangkat <span class="fw-bold">Haji-Umroh-Tour & Travel</span> dengan proses yang cepat dan tidak ribet.</p>
+                <p>Dengan proses serba digital semua dapat dilakukan dengan cepat dan mudah. Berfokus kepada siapapun yang ingin berangkat <span class="fw-bold">Haji-Umroh-Tour & Travel</span> dengan proses yang tidak ribet. Banyak paket yang tersedia untuk pemilihan yang lebih cepat dan akurat.</p>
             </div>
             <div>
                 <button class="btn btn-orange shadow-lg px-4 py-2">Lanjut Baca <i class="ms-2 fa-solid fa-arrow-down"></i></button>
@@ -126,7 +126,7 @@
 <!-- Service -->
 <div class="banner-service p-5 position-relative">
     <div class="row mx-0 position-relative">
-        <div class="col-lg-3 col-md-6 service-list p-1">
+        <div class="col-lg-3 col-md-6 service-list p-2">
             <a href="<?= base_url() ?>/umrah">
                 <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
@@ -141,7 +141,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-6 service-list p-1">
+        <div class="col-lg-3 col-md-6 service-list p-2">
             <a href="<?= base_url() ?>/haji">
                 <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
@@ -156,7 +156,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-6 service-list p-1">
+        <div class="col-lg-3 col-md-6 service-list p-2">
             <a href="<?= base_url() ?>/penerbangan">
                 <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
@@ -171,7 +171,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-6 service-list p-1">
+        <div class="col-lg-3 col-md-6 service-list p-2">
             <a href="<?= base_url() ?>/hotel">
                 <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
@@ -191,7 +191,9 @@
 <!-- End Service -->
 
 <!-- Aboute Us -->
+<div class="position-relative">
 
+</div>
 <!-- End About Us -->
 
 <!-- Best Deals -->
