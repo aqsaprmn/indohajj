@@ -17,6 +17,9 @@ class Penerbangan extends BaseController
             'ceklogin' => ceklogin()
         ];
 
-        return view('Catalog/penerbangan', $data);
+
+        // return view('Catalog/penerbangan', $data);
+
+        return view('Layout/comingsoon', $data);
     }
 }

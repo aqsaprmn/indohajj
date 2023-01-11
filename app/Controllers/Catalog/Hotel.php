@@ -17,6 +17,7 @@ class Hotel extends BaseController
             'ceklogin' => ceklogin()
         ];
 
-        return view('Catalog/hotel', $data);
+        // return view('Catalog/hotel', $data);
+        return view('Layout/comingsoon', $data);
     }
 }

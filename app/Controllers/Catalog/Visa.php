@@ -25,7 +25,8 @@ class Visa extends BaseController
             'ceklogin' => ceklogin()
         ];
 
-        return view('Catalog/visa', $data);
+        // return view('Catalog/visa', $data);
+        return view('Layout/comingsoon', $data);
     }
 
     public function saveVisa()

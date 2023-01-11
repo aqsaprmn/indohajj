@@ -49,6 +49,8 @@ class Home extends BaseController
         //     'httponly' => false
         // ]);
 
+        // dd($data);
+
 
         return view('Catalog/home', $data);
     }

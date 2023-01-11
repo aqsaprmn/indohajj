@@ -2,74 +2,74 @@ const baseURL = "http://localhost/indohajj/";
 // const baseURL = "http://103.242.181.10/indohajj/";
 
 // Scrool Navbar
-const navbar = document.querySelector(".navbar");
+// const navbar = document.querySelector(".navbar");
 
-if (navbar) {
-  const navAll = navbar.querySelector("#nav-all");
-  const menu = navbar.querySelector(".menu");
-  const alink = menu.querySelectorAll("li a");
-  const btnToogler = navbar.querySelector(".navbar-toggler");
-  const iconToogler = btnToogler.querySelector(".navbar-toggler-icon");
-  const loggedIn = navbar.querySelector("#logget-in");
-  const loggedOut = navbar.querySelector("#logged-out");
-  // console.log(menu);
-  window.addEventListener("scroll", function () {
-    if (this.scrollY > 200) {
-      navbar.classList.remove("bg-dongker-2");
-      menu.classList.remove("bg-dongker-2");
-      navbar.classList.add("shadow");
-      navbar.classList.add("bg-white");
-      menu.classList.add("bg-white");
-      navbar.style.height = "90px";
-      for (let i = 0; i < alink.length; i++) {
-        const alinkI = alink[i];
-        alinkI.classList.remove("text-white");
-      }
+// if (navbar) {
+//   const navAll = navbar.querySelector("#nav-all");
+//   const menu = navbar.querySelector(".menu");
+//   const alink = menu.querySelectorAll("li a");
+//   const btnToogler = navbar.querySelector(".navbar-toggler");
+//   const iconToogler = btnToogler.querySelector(".navbar-toggler-icon");
+//   const loggedIn = navbar.querySelector("#logget-in");
+//   const loggedOut = navbar.querySelector("#logged-out");
+//   // console.log(menu);
+//   window.addEventListener("scroll", function () {
+//     if (this.scrollY > 200) {
+//       navbar.classList.remove("bg-transparent");
+//       // menu.classList.remove("bg-transparent");
+//       navbar.classList.add("shadow");
+//       navbar.classList.add("bg-white");
+//       // menu.classList.add("bg-white");
+//       navbar.style.height = "70px";
+//       for (let i = 0; i < alink.length; i++) {
+//         const alinkI = alink[i];
+//         alinkI.classList.remove("text-white");
+//       }
 
-      if (loggedOut) {
-        loggedOut.classList.replace('bg-dongker-2', 'bg-white');
-      }
+//       if (loggedOut) {
+//         loggedOut.classList.replace('bg-transparent', 'bg-white');
+//       }
 
-      btnToogler.classList.replace('border-white', 'border-secondary')
-      iconToogler.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`;
-    } else {
-      navbar.classList.add("bg-dongker-2");
-      menu.classList.add("bg-dongker-2");
-      navbar.classList.remove("shadow");
-      navbar.classList.remove("bg-white");
-      menu.classList.remove("bg-white");
-      navbar.style.height = "80px";
-      for (let i = 0; i < alink.length; i++) {
-        const alinkI = alink[i];
-        alinkI.classList.add("text-white");
-      }
+//       btnToogler.classList.replace('border-white', 'border-secondary')
+//       iconToogler.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`;
+//     } else {
+//       navbar.classList.add("bg-transparent");
+//       // menu.classList.add("bg-transparent");
+//       navbar.classList.remove("shadow");
+//       navbar.classList.remove("bg-white");
+//       // menu.classList.remove("bg-white");
+//       navbar.style.height = "60px";
+//       for (let i = 0; i < alink.length; i++) {
+//         const alinkI = alink[i];
+//         alinkI.classList.add("text-white");
+//       }
 
-      if (loggedOut) {
-      loggedOut.classList.replace('bg-white', 'bg-dongker-2');
-      }
+//       if (loggedOut) {
+//       loggedOut.classList.replace('bg-transparent', 'bg-dongker-2');
+//       }
       
-      btnToogler.classList.replace('border-dark', 'border-white')
-      iconToogler.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`
-    }
-  });
+//       btnToogler.classList.replace('border-dark', 'border-white')
+//       iconToogler.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`
+//     }
+//   });
 
-  // Handle Ui Login
-  // console.log(userlogin);
+//   // Handle Ui Login
+//   // console.log(userlogin);
 
-  resizeUiLogin();
-  window.addEventListener("resize", resizeUiLogin);
+//   resizeUiLogin();
+//   window.addEventListener("resize", resizeUiLogin);
 
-  function resizeUiLogin() {
-    if (loggedIn) {
-      if (this.innerWidth < 992) {
-        // userlogin.style.width = "auto";
-        loggedIn.classList.remove("rounded-start");
-      } else {
-        // userlogin.style.width = "360px";
-        loggedIn.classList.add("rounded-start");
-      }
-    }
-  }
+//   function resizeUiLogin() {
+//     if (loggedIn) {
+//       if (this.innerWidth < 992) {
+//         // userlogin.style.width = "auto";
+//         loggedIn.classList.remove("rounded-start");
+//       } else {
+//         // userlogin.style.width = "360px";
+//         loggedIn.classList.add("rounded-start");
+//       }
+//     }
+//   }
 
   // Hanlde Nav
 
@@ -85,7 +85,7 @@ if (navbar) {
   //     }
   //   }
   // }
-}
+// }
 
 const buttonBook = document.getElementById("btnBooking");
 const buttonCan = document.getElementById("cancel");

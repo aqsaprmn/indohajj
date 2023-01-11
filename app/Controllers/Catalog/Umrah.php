@@ -187,12 +187,12 @@ class Umrah extends BaseController
         for ($i = 1; $i <= $jamaah; $i++) {
             // Ktp
 
-            $nama = trim($this->request->getPost('nama' . $i));
+            $nama = ucwords(trim($this->request->getPost('nama' . $i)));
             $nik = trim($this->request->getPost('nik' . $i));
             $sex = $this->request->getPost('sex' . $i);
-            $address = trim($this->request->getPost('address' . $i));
-            $nationality = trim($this->request->getPost('national' . $i));
-            $pob = trim($this->request->getPost('pob' . $i));
+            $address = ucwords(trim($this->request->getPost('address' . $i)));
+            $nationality = ucwords(trim($this->request->getPost('national' . $i)));
+            $pob = ucwords(trim($this->request->getPost('pob' . $i)));
             $dob = $this->request->getPost('dob' . $i);
 
             $filektp = $this->request->getFile('ktp' . $i);
@@ -218,7 +218,7 @@ class Umrah extends BaseController
             if ($filektp) {
                 if (!$filektp->hasMoved()) {
                     $newNameKtp = explode('.', $filektp->getName());
-                    $newNameKtp = 'KTP_' . date('dmY_His') . '.' . $newNameKtp[1];
+                    $newNameKtp = 'KTP_' . date('dmY_') . time() . '.' . $newNameKtp[1];
 
                     $filektp->move('public/upload/ktp', $newNameKtp);
                 }
@@ -253,16 +253,16 @@ class Umrah extends BaseController
             $filepaspor = $this->request->getFile('paspor' . $i);
             $nopas = trim($this->request->getPost('nopas' . $i));
             $akhirpas = $this->request->getPost('akhirpas' . $i);
-            $namapas = trim($this->request->getPost('namapas' . $i));
+            $namapas = ucfirst(trim($this->request->getPost('namapas' . $i)));
             $dobpas = $this->request->getPost('dobpas' . $i);
             $tipepas = $this->request->getPost('tipepas' . $i);
-            $nationalitypas = trim($this->request->getPost('nationalitypas' . $i));
+            $nationalitypas = ucwords(trim($this->request->getPost('nationalitypas' . $i)));
             $mrzpas = trim($this->request->getPost('mrzpas' . $i));
 
             if ($filepaspor) {
                 if (!$filepaspor->hasMoved()) {
                     $newNamePass = explode('.', $filepaspor->getName());
-                    $newNamePass = 'MRZ_' . date('dmY_his') . '.' . $newNamePass[1];
+                    $newNamePass = 'MRZ_' . date('dmY_') . time() . '.' . $newNamePass[1];
 
                     $filepaspor->move('public/upload/pass', $newNamePass);
                 }

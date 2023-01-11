@@ -16,6 +16,7 @@ class Haji extends BaseController
             'ceklogin' => ceklogin()
         ];
 
-        return view('Catalog/haji', $data);
+        // return view('Catalog/haji', $data); 
+        return view('Layout/comingsoon', $data);
     }
 }

@@ -30,7 +30,7 @@
     <script src="<?= base_url() ?>/public/asset/vendor/sweetalert/dist/sweetalert2.all.js"></script>
 </head>
 
-<body class="p-0">
+<body class="p-0 bg-light">
     <div class="wrapper">
         <!-- Navbar -->
         <?= $this->include('Layout/navbar') ?>
@@ -42,7 +42,7 @@
         </div>
 
         <!-- Email -->
-        <div class="p-5 bg-grad-ocean mb-5">
+        <!-- <div class="p-5 bg-grad-ocean mb-5">
             <div class="text-center mb-5">
                 <h2><span class="text-orange">JANGAN PERNAH LEWATKAN</span> <span class="text-white">INFO TENTANG KAMI!</span></h2>
             </div>
@@ -55,10 +55,10 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
         <!-- End Email -->
         <!-- Footer -->
-        <footer class="bg-grad-ocean">
+        <footer class="bg-dongker text-white">
             <div class="row p-5 mx-0">
                 <div class="col-md-6 mb-md-0 mb-4">
                     <div class="mb-4">
@@ -106,7 +106,6 @@
             <div class="row mx-0 p-3">
                 <div class="text-center">Copyright 2022 © Indohajj. Seluruh Hak Cipta.</div>
             </div>
-
         </footer>
         <!-- End Footer -->
 

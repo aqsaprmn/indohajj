@@ -233,12 +233,12 @@ class User extends BaseController
             if ($insUser === true) {
                 $insUserData = $this->UserDataModel->save([
                     'username' => trim($this->request->getVar('username')),
-                    'name' => trim($this->request->getVar('nama')),
+                    'name' => ucwords(trim($this->request->getVar('nama'))),
                     'nik' => trim($this->request->getVar('nik')),
                     'sex' => $this->request->getVar('sex'),
-                    'address' => trim($this->request->getVar('address')),
-                    'nationality' => trim($this->request->getVar('national')),
-                    'pob' => trim($this->request->getVar('pob')),
+                    'address' => ucwords(trim($this->request->getVar('address'))),
+                    'nationality' => ucwords(trim($this->request->getVar('national'))),
+                    'pob' => ucwords(trim($this->request->getVar('pob'))),
                     'dob' => trim($this->request->getVar('dob')),
                     'image' => 'user.png',
                 ]);
