@@ -595,8 +595,8 @@ div.btn-group:hover {
   }
 }
 
-.banner-service {
-  position: absolute;
+.service-list {
+  position: relative;
 }
 
 .service-list a{
@@ -612,10 +612,14 @@ div.btn-group:hover {
 .service-list .list:hover {
   position: absolute;
   z-index: 100;
-  margin: 20px;
+  transform: translate(20px, 12px);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .service-list .list:hover h5 {
   color: #2b5998;
 }
+
+/* .us-login {
+
+} */

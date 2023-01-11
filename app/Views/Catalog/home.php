@@ -125,10 +125,10 @@
 
 <!-- Service -->
 <div class="banner-service p-5 position-relative">
-    <div class="row mx-0">
+    <div class="row mx-0 position-relative">
         <div class="col-lg-3 col-md-6 service-list p-1">
             <a href="<?= base_url() ?>/umrah">
-                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
                         <i class="fa-solid fa-mosque"></i>
                     </div>
@@ -143,7 +143,7 @@
         </div>
         <div class="col-lg-3 col-md-6 service-list p-1">
             <a href="<?= base_url() ?>/haji">
-                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
                         <i class="fa-solid fa-kaaba"></i>
                     </div>
@@ -158,7 +158,7 @@
         </div>
         <div class="col-lg-3 col-md-6 service-list p-1">
             <a href="<?= base_url() ?>/penerbangan">
-                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
                         <i class="fa-solid fa-plane-departure"></i>
                     </div>
@@ -173,7 +173,7 @@
         </div>
         <div class="col-lg-3 col-md-6 service-list p-1">
             <a href="<?= base_url() ?>/hotel">
-                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                <div class="list w-100 h-100 bg-white rounded-3 p-4">
                     <div class="mb-3 fs-2 text-orange">
                         <i class="fa-solid fa-hotel"></i>
                     </div>
@@ -189,6 +189,10 @@
     </div>
 </div>
 <!-- End Service -->
+
+<!-- Aboute Us -->
+
+<!-- End About Us -->
 
 <!-- Best Deals -->
 <div class="best py-5">
