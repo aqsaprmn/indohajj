@@ -81,7 +81,7 @@
     sukses
 </div> -->
 <!-- Carosul -->
-<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+<!-- <div id="carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner h-100">
         <div class="carousel-item active caro-img">
             <img src="<?= base_url() ?>/public/asset/img/mekah.jpeg" class="d-block w-100" alt="Makkah">
@@ -98,8 +98,98 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-</div>
+</div> -->
 <!-- End Carosul -->
+<!-- Banner Head -->
+<div class="bg-white p-5 position-relative">
+    <div class="row mx-0">
+        <div class="col-md-5 col-lg-7 mb-md-0 mb-5 d-flex text-md-start text-center flex-column justify-content-center">
+            <div class="mb-4 text-dongker">
+                <h2 class=" fw-semibold">Teknologi, Cepat, dan langsung berangkat dengan siap</h2>
+            </div>
+            <div class="mb-4 text-secondary">
+                <p>Indohajj merupakan perusahaan yang bergerak dibidang pelayanan jasa untuk proses perjalanan <span class=" fw-bold">Haji-Umroh-Tour & Travel</span>. Dengan proses serba digital semua dapat dilakukan dengan cepat. Berfokus kepada sapapun yang ingin berangkat <span class="fw-bold">Haji-Umroh-Tour & Travel</span> dengan proses yang cepat dan tidak ribet.</p>
+            </div>
+            <div>
+                <button class="btn btn-orange shadow-lg px-4 py-2">Lanjut Baca <i class="ms-2 fa-solid fa-arrow-down"></i></button>
+            </div>
+        </div>
+        <div class="col-md-7 p-0 col-lg-5 d-flex justify-content-center">
+            <div class="position-relative banner-ilustrasi">
+                <img class="w-100" src="<?= base_url(); ?>/public/asset/img/kabahilustrat.jpeg" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Banner Head -->
+
+<!-- Service -->
+<div class="banner-service p-5 position-relative">
+    <div class="row mx-0">
+        <div class="col-lg-3 col-md-6 service-list p-1">
+            <a href="<?= base_url() ?>/umrah">
+                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                    <div class="mb-3 fs-2 text-orange">
+                        <i class="fa-solid fa-mosque"></i>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Umrah</h5>
+                    </div>
+                    <div class="fs-14 text-secondary">
+                        <span>Menyediakan banyak paket umrah untuk keberangkatan jamaah dengan proses yang mudah</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 service-list p-1">
+            <a href="<?= base_url() ?>/haji">
+                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                    <div class="mb-3 fs-2 text-orange">
+                        <i class="fa-solid fa-kaaba"></i>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Haji</h5>
+                    </div>
+                    <div class="fs-14 text-secondary">
+                        <span>Menyediakan banyak paket haji untuk keberangkatan jamaah dengan proses yang mudah</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 service-list p-1">
+            <a href="<?= base_url() ?>/penerbangan">
+                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                    <div class="mb-3 fs-2 text-orange">
+                        <i class="fa-solid fa-plane-departure"></i>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Penerbangan</h5>
+                    </div>
+                    <div class="fs-14 text-secondary">
+                        <span>Penerbangan kemanapun dan kapanpun dengan berbagai maskapai yang diinginkan dengan cepat</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 service-list p-1">
+            <a href="<?= base_url() ?>/hotel">
+                <div class="position-relative list w-100 h-100 bg-white rounded-3 p-4">
+                    <div class="mb-3 fs-2 text-orange">
+                        <i class="fa-solid fa-hotel"></i>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Hotel</h5>
+                    </div>
+                    <div class="fs-14 text-secondary">
+                        <span>Menginap di hotel impian dengan fasilitas yang menarik serta proses booking yang mudah</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- End Service -->
+
 <!-- Best Deals -->
 <div class="best py-5">
     <div class="best-container">

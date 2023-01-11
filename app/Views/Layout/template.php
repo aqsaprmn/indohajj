@@ -30,6 +30,10 @@
     <script src="<?= base_url() ?>/public/asset/vendor/sweetalert/dist/sweetalert2.all.js"></script>
 </head>
 
+<script>
+    const baseURL = "<?= base_url() ?>";
+</script>
+
 <body class="p-0 bg-light">
     <div class="wrapper">
         <!-- Navbar -->

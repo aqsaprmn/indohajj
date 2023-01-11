@@ -1,5 +1,5 @@
 <nav style="height: 80px" class="navbar navbar-expand-lg bg-light position-fixed w-100 shadow">
-    <div style="font-size: 15px;" class="container-fluid p-0">
+    <div class="container-fluid p-0 fs-15">
         <div class="navbar-brand mx-3">
             <a class="" href="<?= base_url() ?>"><img class="nav-logo" src="<?= base_url() ?>/public/asset/img/logoindohajj.png" alt=""></a>
         </div>
@@ -7,7 +7,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse bg-light navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto fw-medium">
+            <ul class="navbar-nav ms-auto fw-medium">
                 <li class="nav-item mx-2">
                     <a class="nav-link p-2 rounded-1 text-center <?=
                                                                     ($active == 'home') ? 'active' : "text-dark";
@@ -46,8 +46,8 @@
             <hr class="">
             <div class="mx-3">
                 <?php if (isset($ceklogin) && $ceklogin['logged_in']) : ?>
-                    <div class="btn-group d-flex justify-content-center dropdown-center">
-                        <button type="button" class="btn btn-light dropdown-toggle d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    <div class="btn-group d-flex justify-content-center dropdown-center my-3 my-lg-0">
+                        <button type="button" class="btn btn-gray dropdown-toggle d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                             <div class="us-profile position-relative">
                                 <img class="w-100 h-100" src="<?= base_url() ?>/public/asset/profil/<?= $ceklogin['userdata']['image']; ?>" alt="<?= $ceklogin['userdata']['name']; ?>">
                             </div>
@@ -79,13 +79,13 @@
                     <div id="logged-out" class="h-100 px-md-4 px-0 d-flex justify-content-center align-items-center transition-3 order-lg-3 order-2 my-3 my-lg-0">
                         <ul class="d-flex px-0 m-0 justify-content-center align-items-center">
                             <li class="mx-1 d-inline-block">
-                                <a href="<?= base_url() ?>/user/login" class="btn btn-dongker white-space-nowrap">
-                                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                                <a href="<?= base_url() ?>/user/login" class="btn us-login border border-secondary text-secondary white-space-nowrap px-3">
+                                    Login<i class="fa-solid fa-right-to-bracket ms-2"></i>
                                 </a>
                             </li>
                             <li class="mx-1 d-inline-block">
-                                <a class="btn btn-light white-space-nowrap" href="<?= base_url() ?>/user">
-                                    <i class="fa-solid fa-user"></i> Daftar
+                                <a class="btn btn-dongker white-space-nowrap px-3" href="<?= base_url() ?>/user">
+                                    Daftar<i class="fa-solid fa-user ms-2"></i>
                                 </a>
                             </li>
                         </ul>

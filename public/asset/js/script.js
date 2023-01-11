@@ -1,6 +1,3 @@
-const baseURL = "http://localhost/indohajj/";
-// const baseURL = "http://103.242.181.10/indohajj/";
-
 // Scrool Navbar
 // const navbar = document.querySelector(".navbar");
 
@@ -89,65 +86,6 @@ const baseURL = "http://localhost/indohajj/";
 
 const buttonBook = document.getElementById("btnBooking");
 const buttonCan = document.getElementById("cancel");
-// if (buttonBook) {
-//   buttonBook.addEventListener("click", function (e) {
-//     e.stopImmediatePropagation();
-//     e.stopPropagation();
-
-//     const text = buttonBook.getAttribute("data-text");
-
-//     Swal.fire({
-//       title: "Booking Konfirmasi",
-//       text: "Anda Akan Melakukan Booking " + text,
-//       icon: "warning",
-//       showCancelButton: true,
-//       confirmButtonColor: "#3085d6",
-//       cancelButtonColor: "#d33",
-//       confirmButtonText: "Ya, Booking!",
-//     }).then((result) => {
-//       if (result.isConfirmed) {
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     });
-//   });
-// }
-
-// $("form #btnBooking").click(function (e) {
-//   let $form = $(this).closest("form");
-
-//   const text = buttonBook.getAttribute("data-text");
-
-//   Swal.fire({
-//     title: "Booking Konfirmasi",
-//     text: "Anda Akan Melakukan Booking " + text,
-//     icon: "warning",
-//     showCancelButton: true,
-//     confirmButtonColor: "#3085d6",
-//     cancelButtonColor: "#d33",
-//     confirmButtonText: "Ya, Booking!",
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       $form.submit();
-//     } else {
-//       return false;
-//     }
-//   });
-// });
-
-// const maskapai = document.getElementById("maskapai");
-
-// if (maskapai) {
-//   maskapai.addEventListener("change", function () {
-//     const val = this.value;
-
-//     const bandara = document.getElementsByClassName("");
-
-//     if (val == 1) {
-//     }
-//   });
-// }
 
 const message = document.getElementById("message");
 
@@ -204,16 +142,6 @@ for (let i = 0; i < divPass.length; i++) {
 
 const btnCopy = document.getElementById("btnCopy");
 
-// console.log(btnCopy);
-
-// function copyText() {
-//   const textCopy = document.getElementsByClassName("textCopy");
-
-//   textCopy[0].select();
-//   textCopy.setSelectionRange(0, 99999);
-
-//   navigator.clipboard.writeText(copyText.value);
-// }
 if (btnCopy) {
   btnCopy.addEventListener("click", function () {
     var copyText = document.getElementById("textCopy");
