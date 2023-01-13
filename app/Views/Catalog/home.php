@@ -124,7 +124,7 @@
 <!-- End Banner Head -->
 
 <!-- Service -->
-<div class="banner-service p-5 position-relative">
+<div class="banner-service p-sm-5 p-0 position-relative">
     <div class="row mx-0 position-relative">
         <div class="col-lg-3 col-md-6 service-list p-2">
             <a href="<?= base_url() ?>/umrah">
@@ -190,11 +190,32 @@
 </div>
 <!-- End Service -->
 
-<!-- Aboute Us -->
-<div class="position-relative">
-
+<!-- About Us -->
+<div class="position-relative bg-white p-lg-5 p-sm-5 p-2">
+    <div class="row d-flex align-items-center mx-0 px-1 px-md-0 px-lg-5 text-lg-start text-center">
+        <div class="col-lg-6 p-3 p-sm-5 bg-light">
+            <div class="text-orange fw-medium mb-2">
+                TENTANG KAMI
+            </div>
+            <div class="mb2">
+                <h5 class="text-dongker fw-semibold">
+                    Penyedia jasa keberangkatan perjalanan menuju kemanapun yang diinginkan
+                </h5>
+            </div>
+            <div class="py-3 text-secondary">
+                Merupakan penyedia jasa keberangkatan Umrah-Haji-Tour & Travel yang menggunakan kecanggihan teknologi yang membuat proses administrasi menjadi mudah dan cepat, serta penyedia jasa pembuatan visa umrah dengan proses yang tidak ribet dan membutuhkan waktu yang singkat untuk pembuatannya.
+            </div>
+        </div>
+        <div class="col-lg-6 px-0">
+            <div class="position-relative">
+                <img class="w-100" src="<?= base_url(); ?>/public/asset/img/masjidnabawi.jpeg" alt="">
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End About Us -->
+
+<!-- Best Paket Umrah -->
 
 <!-- Best Deals -->
 <div class="best py-5">

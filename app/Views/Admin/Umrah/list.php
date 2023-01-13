@@ -2,6 +2,12 @@
 
 <?= $this->section('content') ?>
 
+<?php if (session()->has('pesan')) : ?>
+    <div hidden id="list-umrah">
+        <?= session()->get('pesan'); ?>
+    </div>
+<?php endif; ?>
+
 <div class="row mx-0 p-3">
     <div class="col-md-12 p-3">
         <div class="card">
@@ -47,15 +53,14 @@
                                         <td>Rp. <?= number_format($p['harga_quad'], 0, ',', '.') ?></td> -->
                                         <td>
                                             <div class="form-button-action">
-                                                <form action="<?= base_url() ?>/adminuser/paketumrah/<?= $p['id'] ?>" method="post" class="mr-1">
+                                                <a href="<?= base_url() ?>/adminuser/paketumrah/<?= $p['kd_pu'] ?>" class="btn btn-primary p-2 ms-1">Edit <i class="fas fa-edit"></i></a>
+                                                <form action="<?= base_url() ?>/adminuser/paketumrah/<?= $p['id'] ?>" method="post" class="ml-1 form-umrah-delete">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <a href="" class="btn btn-danger p-2 " id="btnDelete">
+                                                    <a href="" class="btn btn-danger p-2 btn-umrah-delete">
                                                         Delete <i class="fas fa-trash"></i>
                                                     </a>
                                                 </form>
-                                                <a href="<?= base_url() ?>/adminuser/paketumrah/<?= $p['kd_pu'] ?>" class="btn btn-primary p-2 ms-1">Edit <i class="fas fa-edit"></i></a>
-
                                             </div>
                                         </td>
                                     </tr>
@@ -72,110 +77,48 @@
 <script>
     $(document).ready(function() {
 
-        const approve = document.getElementById('mAprove');
-        if (approve) {
-            console.log(approve.innerHTML);
-            if (approve.innerHTML.trim() == 'suksesap') {
-                swal({
-                    icon: "success",
-                    title: 'Approve Sukses',
-                    text: 'Approve agent sukses',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-primary'
-                        }
-                    }
-                });
-            } else if (approve.innerHTML.trim() == 'gagalap') {
-                swal({
-                    icon: "error",
-                    title: 'Approve Gagal',
-                    text: 'Approve agent gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (approve.innerHTML.trim() == 'suksesunap') {
-                swal({
-                    icon: "success",
-                    title: 'Unapprove Sukses',
-                    text: 'Unapprove agent sukses.',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (approve.innerHTML.trim() == 'gagalunap') {
-                swal({
-                    icon: "error",
-                    title: 'Unapprove Gagal',
-                    text: 'Unapprove agent gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else {
-                swal({
-                    icon: "error",
-                    title: 'Approve Gagal',
-                    text: 'Approve agent gagal, data tidak ditemukan.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            }
-        }
-
         // Paket Umrah
         $('#paket-umrah').DataTable({
             "pageLength": 5,
         });
 
-        $('form #btnDelete').click(function(e) {
+        const paketUmrah = document.getElementById('paket-umrah');
+
+        paketUmrah.addEventListener('click', function(e) {
             e.preventDefault();
-            let $form = $(this).closest("form");
-            // console.log($form);
-            swal({
-                icon: "warning",
-                title: 'Apakah anda yakin hapus paket?',
-                text: "Paket Umrah ini akan di hapus",
-                type: 'warning',
-                buttons: {
-                    confirm: {
-                        text: 'Ya, Hapus',
-                        className: 'btn btn-success'
-                    },
-                    cancel: {
-                        visible: true,
-                        text: 'Batal',
-                        className: 'btn btn-danger'
+            const target = e.target;
+
+            if (target.classList.contains('btn-umrah-delete')) {
+                const btnDelete = target;
+
+                let $form = $(target).closest("form");
+
+                swal({
+                    icon: "warning",
+                    title: 'Apakah anda yakin hapus paket?',
+                    text: "Paket Umrah ini akan di hapus",
+                    buttons: {
+                        confirm: {
+                            text: 'Ya, Hapus',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            text: 'Batal',
+                            className: 'btn btn-danger'
+                        }
                     }
-                }
-            }).then((confirm) => {
-                if (confirm) {
-                    $form.submit();
-                } else {
-                    swal.close();
-                }
-            });
-        });
+                }).then((confirm) => {
+                    if (confirm) {
+                        $form.submit();
+                    } else {
+                        swal.close();
+                    }
+                });
+            } else {
+                window.location = target.href;
+            }
+        })
     });
 </script>
 <?= $this->endSection() ?>

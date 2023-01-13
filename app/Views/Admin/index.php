@@ -24,6 +24,9 @@
         });
     </script>
 
+    <!-- My CSS -->
+    <link rel="stylesheet" href="<?= base_url() ?>/public/asset/css/admin.css">
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="<?= base_url() ?>/public/asset/vendor/Atlantis/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/public/asset/vendor/Atlantis/assets/css/atlantis.min.css">
@@ -303,7 +306,7 @@
         <div class="sidebar sidebar-style-2" data-background-color="dark2">
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
-                    <div class="user">
+                    <!-- <div class="user">
                         <div class="avatar-sm float-left mr-2">
                             <img src="<?= base_url() ?>/public/asset/vendor/Atlantis/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
                         </div>
@@ -337,7 +340,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <ul class="nav nav-primary">
                         <li class="nav-item active">
                             <a href="<?= base_url() ?>/adminuser" class="collapsed">
@@ -692,9 +695,9 @@
             lineColor: 'rgba(255, 255, 255, .5)',
             fillColor: 'rgba(255, 255, 255, .15)'
         });
-
-        // My Script
     </script>
+    <!-- My Script -->
+    <script src="<?= base_url() ?>/public/asset/js/Admin/message.js"></script>
     <?php if (isset($script)) : ?>
         <script src="<?= $script; ?>"></script>
     <?php endif; ?>

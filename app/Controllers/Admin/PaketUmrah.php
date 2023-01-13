@@ -65,7 +65,6 @@ class PaketUmrah extends BaseController
                     'required' => 'Judul harus diisi'
                 ]
             ]
-
         ];
 
         // dd($this->request->getPost());
@@ -158,12 +157,12 @@ class PaketUmrah extends BaseController
 
                 if ($insPuRemaining) {
                     $this->prefix->set('numb', (int)$prefix['numb'] + 1)->where('prefix_cd', "PUM")->update();
-                    return redirect()->to(base_url() . "/adminuser/paketumrah")->with('pesan', 'inputpaketsukses');
+                    return redirect()->to(base_url() . "/adminuser/paketumrah")->with('pesan', 'insertpusukses');
                 } else {
-                    return redirect()->to(base_url() . "/adminuser/paketumrah/add")->with('pesan', 'inputremaininggagal');
+                    return redirect()->to(base_url() . "/adminuser/paketumrah/add")->with('pesan', 'insertpugagalremaining');
                 }
             } else {
-                return redirect()->to(base_url() . "/adminuser/paketumrah/add")->with('pesan', 'inputpaketgagal');
+                return redirect()->to(base_url() . "/adminuser/paketumrah/add")->with('pesan', 'insertpugagal');
             }
         }
     }
@@ -180,15 +179,15 @@ class PaketUmrah extends BaseController
                 $delPuRemaining = $this->PuRemaining->where('kd_pu', $puPaket['kd_pu'])->delete();
 
                 if ($delPuRemaining) {
-                    return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'suksesdeletepu');
+                    return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'deletepusukses');
                 } else {
-                    return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'gagaldeleteremaining');
+                    return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'deletepugagalremaining');
                 }
             } else {
-                return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'gagaldeletepu');
+                return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'deletepugagal');
             }
         } else {
-            return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'notdatapaket');
+            return redirect()->to(base_url() . '/adminuser/paketumrah')->with('pesan', 'nodatapu');
         }
     }
 
@@ -234,8 +233,8 @@ class PaketUmrah extends BaseController
 
             $puPaket = $this->PuPaket->where('kd_pu', $kdPu)->first();
 
-            $nama = trim($this->request->getPost('nama'));
-            $subnama = trim($this->request->getPost('subnama'));
+            $nama = ucwords(trim($this->request->getPost('nama')));
+            $subnama = ucwords(trim($this->request->getPost('subnama')));
             $tipe = $this->request->getPost('tipe');
             $tgl_berangkat = $this->request->getPost('tgl_berangkat');
             $tgl_pulang = $this->request->getPost('tgl_pulang');

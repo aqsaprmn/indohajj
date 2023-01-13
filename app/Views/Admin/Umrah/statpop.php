@@ -24,15 +24,15 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <table id="paket-umrah" class="display table table-striped table-hover">
+                    <table id="status-populer" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Kode Paket</th>
                                 <th>Nama</th>
-                                <th>status</th>
-                                <th>populer</th>
-                                <th style="width: 10%">Action</th>
+                                <th class="text-center">status</th>
+                                <th class="text-center">populer</th>
+                                <th class="text-center" style="width: 10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,19 +43,19 @@
                                         <td><?= $no; ?></td>
                                         <td><?= $p['kd_pu'] ?></td>
                                         <td><?= $p['nama'] ?></td>
-                                        <td class="<?= ($p['status'] == "Y") ? "text-success" :  "text-danger"; ?>"><?= ($p['status'] == "Y") ? "Aktif" :  "Tidak Aktif"; ?></td>
-                                        <td class="<?= ($p['populer'] == "Y") ? "text-primary" : "text-danger" ?>"><?= ($p['populer'] == "Y") ? "Populer" : "Tidak Populer" ?></td>
+                                        <td class="text-center"><span class="white-space-nowrap <?= ($p['status'] == "Y") ? "text-success" :  "text-danger"; ?>"><?= ($p['status'] == "Y") ? "Aktif" :  "No-Aktif"; ?></span></td>
+                                        <td class="text-center"><span class="white-space-nowrap <?= ($p['populer'] == "Y") ? "text-info" : "text-danger" ?>"><?= ($p['populer'] == "Y") ? "Populer" : "No-Populer" ?></span></td>
                                         <td>
                                             <div class="form-button-action">
                                                 <form action="<?= base_url() ?>/adminuser/paketumrah/status/<?= $p['kd_pu'] ?>" method="post" class="mr-1" style="min-width: 100px">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="PUT">
                                                     <?php if ($p['status'] == "Y") : ?>
-                                                        <button href="" class="btn btn-danger p-2 w-100" id="btnNonAktif">
+                                                        <button class="btn btn-danger p-2 w-100 btnNonAktif" data-pesan="Non-Aktifkan">
                                                             Non-Aktif
                                                         </button>
                                                     <?php else : ?>
-                                                        <button href="" class="btn btn-success p-2 w-100" id="btnAktif">
+                                                        <button class="btn btn-success p-2 w-100 btnAktif" data-pesan="Aktifkan">
                                                             Aktifkan
                                                         </button>
                                                     <?php endif; ?>
@@ -64,11 +64,11 @@
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="PUT">
                                                     <?php if ($p['populer'] == "Y") : ?>
-                                                        <button href="" class="btn btn-danger p-2 w-100" id="btnNonPopuler">
+                                                        <button class="btn btn-danger p-2 w-100 btnNonPopuler" data-pesan="Non-Populerkan">
                                                             Non-Populer
                                                         </button>
                                                     <?php else : ?>
-                                                        <button href="" class="btn btn-info p-2 w-100" id="btnPopuler">
+                                                        <button class="btn btn-info p-2 w-100 btnPopuler" data-pesan="Populerkan">
                                                             Populerkan
                                                         </button>
                                                     <?php endif; ?>
@@ -90,154 +90,31 @@
 <script>
     $(document).ready(function() {
 
-        const statpop = document.getElementById('statpop');
-        // console.log(statpop);
-        if (statpop) {
-            // console.log(approve.innerHTML);
-            if (statpop.innerHTML.trim() == 'Saktif') {
-                swal({
-                    icon: "success",
-                    title: 'Aktivasi Sukses',
-                    text: 'Aktivasi paket umrah sukses',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-primary'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Gaktif') {
-                swal({
-                    icon: "error",
-                    title: 'Aktivasi Gagal',
-                    text: 'Aktivasi paket umrah gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Snonaktif') {
-                swal({
-                    icon: "success",
-                    title: 'Non-Aktif Sukses',
-                    text: 'Non-Aktif paket umrah sukses.',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Gnonaktif') {
-                swal({
-                    icon: "error",
-                    title: 'Non-Aktif Gagal',
-                    text: 'Non-Aktif paket umrah gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Spopuler') {
-                swal({
-                    icon: "success",
-                    title: 'Populer Sukses',
-                    text: 'Populer paket umrah sukses',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-primary'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Gpopuler') {
-                swal({
-                    icon: "error",
-                    title: 'Populer Gagal',
-                    text: 'Populer paket umrah gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Snonpopuler') {
-                swal({
-                    icon: "success",
-                    title: 'Non-Populer Sukses',
-                    text: 'Non-Populer paket umrah sukses.',
-                    type: 'success',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else if (statpop.innerHTML.trim() == 'Gnonpopuler') {
-                swal({
-                    icon: "error",
-                    title: 'Non-Populer Gagal',
-                    text: 'Non-Populer agent gagal.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            } else {
-                swal({
-                    icon: "error",
-                    title: 'Proses Gagal',
-                    text: 'Proses paket umrah gagal, data tidak ditemukan.',
-                    type: 'error',
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'btn btn-danger'
-                        }
-                    }
-                });
-            }
-        }
-
         // Paket Umrah
-        $('#paket-umrah').DataTable({
+        $('#status-populer').DataTable({
             "pageLength": 5,
         });
 
-        update('form #btnAktif', 'aktifkan');
-        update('form #btnNonAktif', 'non-aktifkan');
-        update('form #btnPopuler', 'populerkan');
-        update('form #btnNonPopuler', 'non-populerkan');
+        const statusPopuler = document.getElementById('status-populer');
 
-        function update($target, $pesan) {
-            $($target).click(function(e) {
-                e.preventDefault();
+        statusPopuler.addEventListener('click', update);
 
-                let $form = $(this).closest("form");
-                // console.log($form);
+        function update(e) {
+            e.preventDefault();
+
+            const target = e.target;
+            const pesan = e.target.getAttribute('data-pesan');
+
+            if (target.classList.contains('btnNonAktif') || target.classList.contains('btnAktif') || target.classList.contains('btnNonPopuler') || target.classList.contains('btnPopuler')) {
+                let $form = $(target).closest("form");
+
                 swal({
                     icon: "warning",
-                    title: 'Apakah anda yakin ingin ' + $pesan + ' ?',
-                    text: "Paket Umrah ini akan di " + $pesan,
-                    type: 'warning',
+                    title: 'Apakah anda yakin ingin ' + pesan + ' ?',
+                    text: "Paket Umrah ini akan di " + pesan,
                     buttons: {
                         confirm: {
-                            text: 'Ya, ' + $pesan,
+                            text: 'Ya, ' + pesan,
                             className: 'btn btn-success'
                         },
                         cancel: {
@@ -253,7 +130,7 @@
                         swal.close();
                     }
                 });
-            });
+            }
         }
     });
 </script>

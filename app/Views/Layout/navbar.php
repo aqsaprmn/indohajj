@@ -76,7 +76,7 @@
                         </ul>
                     </div>
                 <?php else : ?>
-                    <div id="logged-out" class="h-100 px-md-4 px-0 d-flex justify-content-center align-items-center transition-3 order-lg-3 order-2 my-3 my-lg-0">
+                    <div id="logged-out" class="h-100 px-0 d-flex justify-content-center align-items-center my-3 my-lg-0">
                         <ul class="d-flex px-0 m-0 justify-content-center align-items-center">
                             <li class="mx-1 d-inline-block">
                                 <a href="<?= base_url() ?>/user/login" class="btn us-login border border-secondary text-secondary white-space-nowrap px-3">

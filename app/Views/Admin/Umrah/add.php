@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="jamaah">Jumlah Jamaah</label>
-                                <input type="number" class="form-control" id="jamaah" placeholder="Masukkan jumlah jamaah" name="jamaah" required>
+                                <input type="number" class="form-control" id="jamaah" placeholder="Masukkan jumlah jamaah" name="jamaah" value="1" required>
                             </div>
                             <div class="form-group">
                                 <label for="reservasi">Reservasi</label>
